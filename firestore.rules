@@ -1,0 +1,155 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function logado() {
+      return request.auth != null;
+    }
+
+    function emailAtual() {
+      return logado() &&
+        request.auth.token.email != null
+        ? request.auth.token.email
+        : "";
+    }
+
+    function emailLinche() {
+      return logado() &&
+        emailAtual().matches(
+          '.*@lincheti[.]com[.]br$'
+        );
+    }
+
+    function adminFixo() {
+      return emailLinche() &&
+        emailAtual() ==
+          "jefferson.bem@lincheti.com.br";
+    }
+
+    function usuarioExiste() {
+      return logado() &&
+        exists(
+          /databases/$(database)/documents/usuarios/$(request.auth.uid)
+        );
+    }
+
+    function perfilUsuario() {
+      return get(
+        /databases/$(database)/documents/usuarios/$(request.auth.uid)
+      ).data.perfil;
+    }
+
+    function ativo() {
+      return emailLinche() &&
+        usuarioExiste() &&
+        get(
+          /databases/$(database)/documents/usuarios/$(request.auth.uid)
+        ).data.ativo == true;
+    }
+
+    function gestor() {
+      return ativo() &&
+        perfilUsuario() in [
+          "gestor",
+          "Gestor"
+        ];
+    }
+
+    function gestorOuAdmin() {
+      return adminFixo() ||
+        gestor();
+    }
+
+    /*
+     * O único administrador real é o e-mail fixo.
+     */
+    match /usuarios/{uid} {
+
+      allow read:
+        if ativo() &&
+        (
+          request.auth.uid == uid ||
+          gestorOuAdmin()
+        );
+
+      /*
+       * Bootstrap exclusivo do administrador fixo.
+       */
+      allow create:
+        if adminFixo() &&
+        (
+          request.auth.uid == uid ||
+          request.resource.data.perfil != "admin"
+        );
+
+      /*
+       * Aprovação de usuários:
+       * somente o administrador fixo pode criar/alterar perfis.
+       */
+      allow update, delete:
+        if adminFixo();
+    }
+
+    /*
+     * Solicitação criada pelo próprio usuário autenticado.
+     */
+    match /solicitacoesAcesso/{uid} {
+
+      allow create:
+        if emailLinche() &&
+        request.auth.uid == uid &&
+        request.resource.data.uid ==
+          request.auth.uid &&
+        request.resource.data.email ==
+          emailAtual() &&
+        request.resource.data.status ==
+          "pendente" &&
+        request.resource.data.perfilSolicitado in [
+          "analista",
+          "gestor",
+          "consulta"
+        ];
+
+      allow read:
+        if adminFixo() ||
+        (
+          emailLinche() &&
+          request.auth.uid == uid
+        );
+
+      allow update:
+        if adminFixo();
+
+      allow delete:
+        if adminFixo();
+    }
+
+    match /rats/{ratId} {
+      allow read:
+        if ativo();
+
+      allow create:
+        if ativo();
+
+      allow update, delete:
+        if gestorOuAdmin();
+    }
+
+    match /visitas/{visitaId} {
+      allow read, create, update:
+        if ativo();
+
+      allow delete:
+        if gestorOuAdmin();
+    }
+
+    match /clientes/{clienteId} {
+      allow read:
+        if ativo();
+
+      allow create, update, delete:
+        if gestorOuAdmin();
+    }
+  }
+}

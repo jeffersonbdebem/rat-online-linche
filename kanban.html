@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b0f0d"
+    >
+
+    <title>Linche Field | Visitas Técnicas</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="app.css?v=2.7.0">
+    <link rel="stylesheet" href="kanban.css?v=2.3">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <aside class="sidebar"></aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="eyebrow">
+                    OPERAÇÃO TÉCNICA
+                </p>
+
+                <h1>
+                    Visitas técnicas
+                </h1>
+
+                <p class="subtitle">
+                    Acompanhe a operação em tempo real.
+                </p>
+
+            </div>
+
+            <div class="top-actions">
+
+                <button
+                    id="btnAtualizar"
+                    class="btn ghost"
+                    type="button"
+                >
+                    ↻ Atualizar
+                </button>
+
+                <button
+                    id="btnNovaVisita"
+                    class="btn primary"
+                    type="button"
+                >
+                    ＋ Nova visita
+                </button>
+
+            </div>
+
+        </header>
+
+        <section class="metrics">
+
+            <article class="metric-card">
+
+                <span class="metric-icon gray">
+                    ▦
+                </span>
+
+                <div>
+                    <small>Visitas exibidas</small>
+                    <strong id="totalVisitas">0</strong>
+                </div>
+
+            </article>
+
+            <article class="metric-card">
+
+                <span class="metric-icon blue">
+                    ➜
+                </span>
+
+                <div>
+                    <small>Em campo</small>
+                    <strong id="totalCampo">0</strong>
+                </div>
+
+            </article>
+
+            <article class="metric-card">
+
+                <span class="metric-icon orange">
+                    !
+                </span>
+
+                <div>
+                    <small>Atrasadas</small>
+                    <strong id="totalAtrasadas">0</strong>
+                </div>
+
+            </article>
+
+            <article class="metric-card">
+
+                <span class="metric-icon green">
+                    ✓
+                </span>
+
+                <div>
+                    <small>Concluídas</small>
+                    <strong id="totalConcluidas">0</strong>
+                </div>
+
+            </article>
+
+        </section>
+
+        <section class="toolbar">
+
+            <div class="search-box">
+
+                <span>⌕</span>
+
+                <input
+                    id="filtroBusca"
+                    type="search"
+                    placeholder="Buscar cliente, cidade, técnico ou problema..."
+                >
+
+            </div>
+
+            <select id="filtroData">
+
+                <option value="hoje">
+                    Hoje
+                </option>
+
+                <option value="semana">
+                    Esta semana
+                </option>
+
+                <option value="todos">
+                    Todas as datas
+                </option>
+
+            </select>
+
+            <select id="filtroTecnico">
+
+                <option value="todos">
+                    Todos os técnicos
+                </option>
+
+            </select>
+
+            <select id="filtroPrioridade">
+
+                <option value="todas">
+                    Todas as prioridades
+                </option>
+
+                <option value="alta">
+                    Alta
+                </option>
+
+                <option value="media">
+                    Média
+                </option>
+
+                <option value="baixa">
+                    Baixa
+                </option>
+
+            </select>
+
+        </section>
+
+        <section class="kanban">
+
+            <div
+                class="kanban-column"
+                data-status="agendada"
+            >
+
+                <header>
+
+                    <span class="column-dot gray"></span>
+
+                    <h2>Agendadas</h2>
+
+                    <b class="column-count">
+                        0
+                    </b>
+
+                </header>
+
+                <div
+                    class="card-list"
+                    data-dropzone="agendada"
+                ></div>
+
+            </div>
+
+            <div
+                class="kanban-column"
+                data-status="em_rota"
+            >
+
+                <header>
+
+                    <span class="column-dot blue"></span>
+
+                    <h2>Em rota</h2>
+
+                    <b class="column-count">
+                        0
+                    </b>
+
+                </header>
+
+                <div
+                    class="card-list"
+                    data-dropzone="em_rota"
+                ></div>
+
+            </div>
+
+            <div
+                class="kanban-column"
+                data-status="em_atendimento"
+            >
+
+                <header>
+
+                    <span class="column-dot orange"></span>
+
+                    <h2>Em atendimento</h2>
+
+                    <b class="column-count">
+                        0
+                    </b>
+
+                </header>
+
+                <div
+                    class="card-list"
+                    data-dropzone="em_atendimento"
+                ></div>
+
+            </div>
+
+            <div
+                class="kanban-column"
+                data-status="finalizacao"
+            >
+
+                <header>
+
+                    <span class="column-dot purple"></span>
+
+                    <h2>Finalização</h2>
+
+                    <b class="column-count">
+                        0
+                    </b>
+
+                </header>
+
+                <div
+                    class="card-list"
+                    data-dropzone="finalizacao"
+                ></div>
+
+            </div>
+
+            <div
+                class="kanban-column"
+                data-status="concluida"
+            >
+
+                <header>
+
+                    <span class="column-dot green"></span>
+
+                    <h2>Concluídas</h2>
+
+                    <b class="column-count">
+                        0
+                    </b>
+
+                </header>
+
+                <div
+                    class="card-list"
+                    data-dropzone="concluida"
+                ></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div
+    id="modalVisita"
+    class="modal hidden"
+>
+
+    <div
+        class="modal-backdrop"
+        data-close-modal
+    ></div>
+
+    <div class="modal-panel">
+
+        <header class="modal-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    GESTÃO DE CAMPO
+                </p>
+
+                <h2 id="tituloModal">
+                    Nova visita
+                </h2>
+
+            </div>
+
+            <button
+                class="icon-button"
+                type="button"
+                data-close-modal
+            >
+                ×
+            </button>
+
+        </header>
+
+        <form id="formVisita">
+
+            <input
+                type="hidden"
+                id="visitaId"
+            >
+
+            <div class="form-grid">
+
+                <label class="field span-2">
+
+                    Cliente *
+
+                    <input
+                        id="cliente"
+                        required
+                        maxlength="120"
+                        placeholder="Nome da empresa"
+                    >
+
+                </label>
+
+                <label class="field">
+
+                    Data *
+
+                    <input
+                        id="data"
+                        type="date"
+                        required
+                    >
+
+                </label>
+
+                <label class="field">
+
+                    Horário *
+
+                    <input
+                        id="horario"
+                        type="time"
+                        required
+                    >
+
+                </label>
+
+                <label class="field">
+
+                    Técnico *
+
+                    <input
+                        id="tecnico"
+                        required
+                        maxlength="80"
+                        placeholder="Responsável pela visita"
+                    >
+
+                </label>
+
+                <label class="field">
+
+                    Prioridade
+
+                    <select id="prioridade">
+
+                        <option value="baixa">
+                            Baixa
+                        </option>
+
+                        <option
+                            value="media"
+                            selected
+                        >
+                            Média
+                        </option>
+
+                        <option value="alta">
+                            Alta
+                        </option>
+
+                    </select>
+
+                </label>
+
+                <label class="field">
+
+                    Contato
+
+                    <input
+                        id="contato"
+                        maxlength="80"
+                        placeholder="Nome do contato"
+                    >
+
+                </label>
+
+                <label class="field">
+
+                    Telefone
+
+                    <input
+                        id="telefone"
+                        maxlength="30"
+                        placeholder="(19) 99999-9999"
+                    >
+
+                </label>
+
+                <label class="field span-2">
+
+                    Endereço
+
+                    <input
+                        id="endereco"
+                        maxlength="180"
+                        placeholder="Rua, número, cidade e estado"
+                    >
+
+                </label>
+
+                <label class="field span-2">
+
+                    Problema ou objetivo da visita *
+
+                    <textarea
+                        id="problema"
+                        required
+                        maxlength="1000"
+                        rows="4"
+                    ></textarea>
+
+                </label>
+
+                <label class="field span-2">
+
+                    Observações internas
+
+                    <textarea
+                        id="observacoes"
+                        maxlength="1000"
+                        rows="3"
+                    ></textarea>
+
+                </label>
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button
+                    id="btnExcluir"
+                    class="btn danger hidden"
+                    type="button"
+                >
+                    Excluir
+                </button>
+
+                <span class="action-spacer"></span>
+
+                <button
+                    class="btn ghost"
+                    type="button"
+                    data-close-modal
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    id="btnSalvar"
+                    class="btn primary"
+                    type="submit"
+                >
+                    Salvar visita
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
+<script type="module" src="menu.js?v=2.7.0"></script>
+<script type="module" src="kanban.js?v=2.5.2"></script>
+
+</body>
+</html>

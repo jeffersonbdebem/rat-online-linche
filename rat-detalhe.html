@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes da RAT | Linche Field</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="app.css?v=2.7.0">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar"></aside>
+
+    <main class="main">
+
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">RELATÓRIO DE ATENDIMENTO TÉCNICO</p>
+          <h1 id="tituloRat">Carregando RAT...</h1>
+          <p>Visualize os dados registrados e gere novamente o PDF.</p>
+        </div>
+
+        <div class="page-actions">
+          <button id="btnVoltar" class="secondary" type="button">
+            ← Histórico
+          </button>
+
+          <button id="btnPdf" class="primary" type="button" disabled>
+            Abrir PDF
+          </button>
+        </div>
+      </header>
+
+      <section id="estadoCarregamento" class="card">
+        Carregando informações...
+      </section>
+
+      <section id="conteudoRat" class="hidden">
+
+        <section class="card">
+          <h2>Identificação do cliente</h2>
+
+          <div class="detail-grid">
+            <div class="detail-item span-2">
+              <small>Cliente</small>
+              <strong id="cliente">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>CPF / CNPJ</small>
+              <strong id="documento">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Solicitante</small>
+              <strong id="solicitante">-</strong>
+            </div>
+
+            <div class="detail-item span-2">
+              <small>Endereço</small>
+              <strong id="endereco">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Cidade</small>
+              <strong id="cidade">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>CEP</small>
+              <strong id="cep">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>E-mail</small>
+              <strong id="email">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Telefone</small>
+              <strong id="fone">-</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Atendimento</h2>
+
+          <div class="detail-grid">
+            <div class="detail-item">
+              <small>Abertura</small>
+              <strong id="abertura">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Finalização</small>
+              <strong id="final">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>TAG</small>
+              <strong id="tag">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Valor</small>
+              <strong id="valor">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Tipo de atendimento</small>
+              <strong id="atendimento">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Status</small>
+              <strong id="status">-</strong>
+            </div>
+
+            <div class="detail-item span-4">
+              <small>Peças e periféricos</small>
+              <strong id="pecas">-</strong>
+            </div>
+
+            <div class="detail-item span-4">
+              <small>Problema</small>
+              <p id="problema">-</p>
+            </div>
+
+            <div class="detail-item span-4">
+              <small>Solução</small>
+              <p id="solucao">-</p>
+            </div>
+
+            <div class="detail-item span-4">
+              <small>Observações</small>
+              <p id="obs">-</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Finalização e responsabilidade</h2>
+
+          <div class="detail-grid">
+            <div class="detail-item span-2">
+              <small>Técnicos responsáveis</small>
+              <strong id="tecnicos">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>RG / Carimbo</small>
+              <strong id="rg">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Entregue por</small>
+              <strong id="entreguePor">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Finalizado no card</small>
+              <strong id="finalizado">-</strong>
+            </div>
+
+            <div class="detail-item">
+              <small>Registro criado em</small>
+              <strong id="criadoEm">-</strong>
+            </div>
+
+            <div class="detail-item span-4">
+              <small>Assinatura registrada</small>
+              <div id="assinaturaBox" class="signature-preview">
+                Sem imagem de assinatura armazenada.
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="menu.js?v=2.7.0"></script>
+  <script type="module" src="rat-detalhe.js?v=2.5.2"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linche Field | Solicitar acesso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css?v=2.5.2.1">
+</head>
+
+<body>
+
+  <main class="auth-page">
+
+    <section class="auth-card auth-card-wide">
+
+      <div class="login-brand">
+        <img
+          src="assets/logo-linche-icone.jpeg"
+          alt="Linche Tecnologia"
+        >
+
+        <div>
+          <strong>Linche</strong>
+          <small>FIELD</small>
+        </div>
+      </div>
+
+      <div class="auth-heading">
+        <p class="auth-eyebrow">
+          ACESSO CORPORATIVO
+        </p>
+
+        <h1>
+          Solicitar acesso
+        </h1>
+
+        <p>
+          Crie sua conta corporativa. O acesso ao Linche Field será liberado após aprovação do administrador.
+        </p>
+      </div>
+
+      <form id="cadastroForm">
+
+        <div class="auth-grid">
+
+          <label>
+            Nome completo
+            <input
+              id="nomeCadastro"
+              type="text"
+              autocomplete="name"
+              required
+              maxlength="100"
+              placeholder="Seu nome"
+            >
+          </label>
+
+          <label>
+            Cargo
+            <select
+              id="cargoCadastro"
+              required
+            >
+              <option value="">
+                Selecione
+              </option>
+
+              <option value="Analista de Suporte">
+                Analista de Suporte
+              </option>
+
+              <option value="Técnico de Campo">
+                Técnico de Campo
+              </option>
+
+              <option value="Coordenador Técnico">
+                Coordenador Técnico
+              </option>
+
+              <option value="Gestor">
+                Gestor
+              </option>
+
+              <option value="Administrativo">
+                Administrativo
+              </option>
+
+              <option value="Financeiro">
+                Financeiro
+              </option>
+
+              <option value="Comercial">
+                Comercial
+              </option>
+            </select>
+          </label>
+
+          <label class="span-2">
+            E-mail corporativo
+            <input
+              id="emailCadastro"
+              type="email"
+              autocomplete="email"
+              required
+              placeholder="nome@lincheti.com.br"
+            >
+          </label>
+
+          <label>
+            Senha
+            <input
+              id="senhaCadastro"
+              type="password"
+              autocomplete="new-password"
+              required
+              minlength="8"
+              placeholder="Mínimo 8 caracteres"
+            >
+          </label>
+
+          <label>
+            Confirmar senha
+            <input
+              id="confirmarSenhaCadastro"
+              type="password"
+              autocomplete="new-password"
+              required
+              minlength="8"
+              placeholder="Repita a senha"
+            >
+          </label>
+
+        </div>
+
+        <div
+          id="cadastroErro"
+          class="auth-message error"
+        ></div>
+
+        <div
+          id="cadastroSucesso"
+          class="auth-message success"
+        ></div>
+
+        <button
+          id="btnSolicitarAcesso"
+          class="auth-primary"
+          type="submit"
+        >
+          Solicitar acesso
+        </button>
+
+      </form>
+
+      <div class="auth-footer-link">
+        Já possui acesso?
+        <a href="login.html">
+          Voltar para o login
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script
+    type="module"
+    src="cadastro.js?v=2.5.2.1"
+  ></script>
+
+</body>
+</html>

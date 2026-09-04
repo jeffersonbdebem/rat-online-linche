@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Linche Field | Usuários</title>
+<link rel="stylesheet" href="app.css?v=2.7.0">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar"></aside>
+<main class="main-content">
+<header class="topbar">
+<div><p class="eyebrow">ADMINISTRAÇÃO</p><h1>Usuários</h1><p>Gerencie acessos, perfis e status da equipe.</p></div>
+<div class="page-actions"><button id="btnAtualizarUsuarios" class="secondary" type="button">↻ Atualizar</button></div>
+</header>
+<section class="dashboard-metrics">
+<article class="mini-card dashboard-metric"><span class="icon">●</span><div><small>Ativos</small><strong id="metricUsuariosAtivos">0</strong></div></article>
+<article class="mini-card dashboard-metric"><span class="icon">○</span><div><small>Inativos</small><strong id="metricUsuariosInativos">0</strong></div></article>
+<article class="mini-card dashboard-metric"><span class="icon">Σ</span><div><small>Total</small><strong id="metricUsuariosTotal">0</strong></div></article>
+</section>
+<section class="card">
+<div class="history-toolbar">
+<input id="buscaUsuario" type="search" placeholder="Buscar nome, cargo ou e-mail...">
+<select id="filtroUsuarioStatus"><option value="todos">Todos</option><option value="ativo">Ativos</option><option value="inativo">Inativos</option></select>
+</div>
+<div id="listaUsuarios" class="access-request-list"></div>
+</section>
+</main>
+</div>
+<div id="toastUsuarios" class="toast"></div>
+<script type="module" src="menu.js?v=2.7.0"></script>
+<script type="module" src="usuarios.js?v=2.6.0"></script>
+</body>
+</html>

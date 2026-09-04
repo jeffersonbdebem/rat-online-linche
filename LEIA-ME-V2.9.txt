@@ -1,0 +1,26 @@
+LINCHE FIELD V2.9 — HUB DE INTEGRAÇÕES + BACKEND
+
+NOVO:
+- Tela Integrações exclusiva do administrador.
+- Cards MSP Desk, Datto RMM e Acronis.
+- Backend Node.js/Express em /backend.
+- GET /api/health
+- GET /api/integrations/mspdesk/status
+- POST /api/integrations/mspdesk/test
+- Credenciais somente em backend/.env.
+
+Frontend:
+firebase deploy --only hosting
+
+Backend local:
+cd backend
+npm install
+Copy-Item .env.example .env
+npm run dev
+
+Teste:
+http://localhost:3000/api/health
+
+IMPORTANTE:
+A chamada real da API MSP Desk ainda depende da documentação/credenciais oficiais.
+Não foi inventado nenhum endpoint externo.

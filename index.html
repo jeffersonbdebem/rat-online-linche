@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAT Online - Linche TI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?v=2.7.0" />
+</head>
+<body>
+  <div class="app-shell">
+  <aside class="sidebar">
+</aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1>Novo Relatório de Atendimento Técnico</h1>
+        <p>Preencha, colete a assinatura e gere o PDF.</p>
+      </div>
+      <div class="rat-box">
+        <small>RAT Nº</small>
+        <strong id="ratNumero">RAT-2026-000001</strong>
+      </div>
+    </header>
+
+    <form class="card" id="ratForm">
+      <h2>Identificação do Cliente</h2>
+      <div class="grid two">
+        <label>Nome / Razão Social<input id="cliente" required></label>
+        <label>CPF / CNPJ<input id="documento"></label>
+      </div>
+      <div class="grid three">
+        <label>Endereço / Bairro<input id="endereco"></label>
+        <label>Cidade<input id="cidade"></label>
+        <label>CEP<input id="cep"></label>
+      </div>
+      <div class="grid three">
+        <label>Solicitante<input id="solicitante"></label>
+        <label>E-mail<input id="email"></label>
+        <label>Fone<input id="fone"></label>
+      </div>
+
+      <h2>Informações do Atendimento</h2>
+      <div class="grid three">
+        <label>Data/Hora de Abertura<input type="datetime-local" id="abertura"></label>
+        <label>TAG<input id="tag"></label>
+        <label>Valor R$<input id="valor" placeholder="0,00"></label>
+      </div>
+
+      <div class="checks">
+        <strong>Peças e Periféricos:</strong>
+        <label><input type="checkbox" value="C/ Fonte" name="pecas"> C/ Fonte</label>
+        <label><input type="checkbox" value="S/ Fonte" name="pecas"> S/ Fonte</label>
+        <label><input type="checkbox" value="Bag / Mochila" name="pecas"> Bag / Mochila</label>
+        <label><input type="checkbox" value="Bateria" name="pecas"> Bateria</label>
+        <label>Outros: <input id="outros" class="inline"></label>
+      </div>
+
+      <label>Problema<textarea id="problema"></textarea></label>
+      <label>Solução<textarea id="solucao"></textarea></label>
+      <label>OBS<textarea id="obs"></textarea></label>
+
+      <div class="grid two">
+        <section class="mini-card">
+          <h3>Atendimento</h3>
+          <label><input type="radio" name="atendimento" value="Linche" checked> Linche</label>
+          <label><input type="radio" name="atendimento" value="Visita Técnica"> Visita Técnica</label>
+          <label><input type="radio" name="atendimento" value="Remoto"> Remoto</label>
+        </section>
+        <section class="mini-card">
+          <h3>Status</h3>
+          <label><input type="radio" name="status" value="Aguardando Aprovação" checked> Aguardando Aprovação</label>
+          <label><input type="radio" name="status" value="Aguardando Peça"> Aguardando Peça</label>
+          <label><input type="radio" name="status" value="Pronto"> Pronto</label>
+        </section>
+      </div>
+
+      <h2>Controle Interno</h2>
+      <div class="grid three">
+        <label class="check-final"><input type="checkbox" id="finalizado"> Finalizado Card</label>
+        <label>Entregue por<input id="entreguePor"></label>
+        <label>Técnicos responsáveis<input id="tecnicos"></label>
+      </div>
+
+      <div class="grid four">
+        <label>Data/Horário Final<input type="datetime-local" id="final"></label>
+        <label>RG / Carimbo<input id="rg"></label>
+        <label>Data/Horário Assinatura<input type="datetime-local" id="assinaturaData"></label>
+      </div>
+
+      <h2>Assinatura Cliente</h2>
+      <canvas id="signaturePad"></canvas>
+      <div class="actions">
+        <button type="button" class="secondary" onclick="limparAssinatura()">Limpar assinatura</button>
+        <button type="button" class="secondary" onclick="limparFormulario()">Limpar formulário</button>
+        <button type="button" class="primary" onclick="gerarPDF()">Gerar PDF</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script type="module" src="script.js?v=2.5.2"></script>
+    </div><!-- app-shell -->
+  <script type="module" src="menu.js?v=2.7.0"></script>
+</body>
+</html>

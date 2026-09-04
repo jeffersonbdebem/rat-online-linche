@@ -1,0 +1,20 @@
+LINCHE FIELD 2.3 - CORREÇÃO DO FLUXO FINALIZAÇÃO -> RAT
+
+Correções:
+- Força o navegador a carregar kanban.js/script.js novos usando ?v=2.3.
+- Ao arrastar para Finalização ou Concluída sem RAT, abre index.html com visitaId.
+- A abertura da RAT acontece mesmo se a atualização prévia do Firestore falhar.
+- Na coluna Finalização aparece botão 'Abrir RAT' como alternativa manual.
+- Quando a RAT já está vinculada, o cartão mostra o número da RAT.
+
+DEPLOY:
+firebase deploy --only hosting
+
+TESTE:
+1. Ctrl+F5
+2. Crie visita
+3. Mova para Em Atendimento
+4. Arraste para Finalização
+5. A URL deve virar algo como:
+   index.html?visitaId=XXXXX&destino=finalizacao
+6. A RAT deve abrir preenchida.

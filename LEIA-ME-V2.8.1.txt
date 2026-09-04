@@ -1,0 +1,36 @@
+LINCHE FIELD V2.8.1 — REFINAMENTO PAINEL TV
+==============================================
+
+BASE
+----
+V2.8 estável.
+
+MELHORIAS
+---------
+- Faixa "Operação Linche" com resumo do dia.
+- Próxima visita exibida no topo.
+- Técnicos em campo mais destacados.
+- Cards de Em rota / Atendimento / Finalização recebem destaque lateral.
+- Status do técnico aparece dentro do cartão.
+- Atraso agora mostra tempo aproximado:
+  "Atraso 15 min"
+  "Atraso 1h 20min"
+- Alerta de atraso ficou mais elegante e menos agressivo.
+- Legenda discreta no rodapé.
+- Mantida atualização em tempo real.
+- Mantido modo tela cheia.
+- Nenhuma alteração na coleção visitas.
+
+DEPLOY
+------
+firebase deploy --only hosting
+
+TESTE
+-----
+1. Abra Painel TV.
+2. Coloque uma visita futura em Agendada.
+3. Confirme "Próxima visita".
+4. Mova visita para Em rota.
+5. Confirme destaque do técnico em campo.
+6. Use horário anterior ao atual e confirme tempo de atraso.
+7. Conclua a visita e confirme indicadores.

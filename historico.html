@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Histórico de RATs - Linche TI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?v=2.7.0" />
+</head>
+<body>
+  <div class="app-shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1>Histórico de RATs</h1>
+        <p>Consulte os atendimentos salvos no Firestore.</p>
+      </div>
+      <div class="user-box" id="usuarioLogado">Carregando...</div>
+    </header>
+
+    <section class="card">
+      <div class="history-toolbar">
+        <input id="busca" placeholder="Buscar por RAT, cliente, técnico ou status...">
+        <button class="secondary" id="btnAtualizar">Atualizar</button>
+      </div>
+      <div class="table-wrap">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>RAT</th>
+              <th>Cliente</th>
+              <th>Técnico</th>
+              <th>Status</th>
+              <th>Data</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="listaRats">
+            <tr><td colspan="6">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+	<script type="module" src="historico.js?v=2.5.2"></script>
+	  </div><!-- app-shell -->
+  <script type="module" src="menu.js?v=2.7.0"></script>
+</body>
+</html>

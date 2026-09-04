@@ -1,0 +1,92 @@
+LINCHE FIELD V2.5.2 — SOLICITAÇÃO E APROVAÇÃO DE ACESSOS
+================================================================
+
+NOVO FLUXO
+----------
+1. Usuário abre login.html.
+2. Clica em "Solicitar acesso".
+3. Preenche:
+   - Nome
+   - Cargo
+   - E-mail @lincheti.com.br
+   - Senha
+   - Confirmar senha
+4. O Firebase Authentication cria a conta.
+5. O sistema cria:
+   solicitacoesAcesso/{UID}
+6. O usuário recebe e-mail de verificação.
+7. O acesso fica PENDENTE.
+8. O administrador:
+   jefferson.bem@lincheti.com.br
+   abre "Acessos" no menu.
+9. Seleciona o perfil final:
+   - Analista
+   - Gestor
+   - Consulta
+10. Aprova ou recusa.
+11. Ao aprovar, é criado:
+    usuarios/{UID}
+12. O usuário consegue entrar.
+
+ADMINISTRADOR
+-------------
+O único e-mail administrativo é:
+jefferson.bem@lincheti.com.br
+
+Nenhum outro usuário consegue solicitar ou receber perfil admin pela interface.
+
+CARGOS E PERFIL SUGERIDO
+------------------------
+Analista de Suporte -> analista
+Técnico de Campo -> analista
+Coordenador Técnico -> gestor
+Gestor -> gestor
+Administrativo -> consulta
+Financeiro -> consulta
+Comercial -> consulta
+
+O administrador ainda pode alterar o perfil final antes de aprovar.
+
+DEPLOY
+------
+1)
+firebase deploy --only hosting
+
+2)
+firebase deploy --only firestore:rules
+
+FIREBASE AUTHENTICATION
+-----------------------
+Confirme que Email/Password está habilitado:
+Firebase Console
+Authentication
+Sign-in method
+Email/Password
+Enable
+
+E-MAIL DE VERIFICAÇÃO
+---------------------
+O cadastro chama sendEmailVerification() automaticamente.
+O usuário precisa confirmar o e-mail antes de entrar.
+
+TESTE RECOMENDADO
+-----------------
+1. Entre como Jefferson.
+2. Confirme que aparece "Acessos" no menu.
+3. Saia.
+4. Clique em Solicitar acesso.
+5. Use um e-mail @lincheti.com.br diferente do Jefferson.
+6. Faça a solicitação.
+7. Confirme o e-mail recebido.
+8. Tente entrar: deve informar "aguardando aprovação".
+9. Entre como Jefferson.
+10. Abra Acessos.
+11. Aprove como Analista.
+12. Faça login com o usuário aprovado.
+13. Confirme que ele vê:
+    Dashboard
+    Visitas
+    Nova RAT
+    Histórico
+    Clientes
+14. Confirme que ele NÃO vê Relatórios.

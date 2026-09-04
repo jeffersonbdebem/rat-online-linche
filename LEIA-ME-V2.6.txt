@@ -1,0 +1,18 @@
+LINCHE FIELD V2.6 - RESET DE SENHA E USUARIOS
+
+Arquivos deste pacote devem substituir/adicionar na raiz do projeto.
+
+NOVO:
+- Esqueci minha senha no login
+- reset-senha.html / reset-senha.js
+- usuarios.html / usuarios.js
+- Menu Usuários exclusivo do administrador
+- Editar nome, cargo e perfil
+- Ativar/desativar analista
+- Enviar reset de senha pelo administrador
+- Jefferson permanece protegido como administrador fixo
+
+DEPLOY:
+firebase deploy --only hosting
+
+Não é necessário alterar as regras do Firestore para o reset de senha.

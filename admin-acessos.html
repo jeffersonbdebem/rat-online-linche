@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linche Field | Administração de Acessos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?v=2.7.0" />
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <aside class="sidebar"></aside>
+
+    <main class="main-content">
+
+      <header class="topbar">
+
+        <div>
+          <p class="eyebrow">
+            ADMINISTRAÇÃO
+          </p>
+
+          <h1>
+            Solicitações de acesso
+          </h1>
+
+          <p>
+            Aprove ou recuse os acessos solicitados pela equipe.
+          </p>
+        </div>
+
+        <div class="page-actions">
+
+          <button
+            id="btnAtualizarAcessos"
+            type="button"
+            class="secondary"
+          >
+            ↻ Atualizar
+          </button>
+
+        </div>
+
+      </header>
+
+      <section class="dashboard-metrics">
+
+        <article class="mini-card dashboard-metric">
+          <span class="icon">
+            ◷
+          </span>
+
+          <div>
+            <small>
+              Pendentes
+            </small>
+
+            <strong id="metricPendentes">
+              0
+            </strong>
+          </div>
+        </article>
+
+        <article class="mini-card dashboard-metric">
+          <span class="icon">
+            ✓
+          </span>
+
+          <div>
+            <small>
+              Aprovadas
+            </small>
+
+            <strong id="metricAprovadas">
+              0
+            </strong>
+          </div>
+        </article>
+
+        <article class="mini-card dashboard-metric">
+          <span class="icon">
+            ×
+          </span>
+
+          <div>
+            <small>
+              Recusadas
+            </small>
+
+            <strong id="metricRecusadas">
+              0
+            </strong>
+          </div>
+        </article>
+
+      </section>
+
+      <section class="card">
+
+        <div class="history-toolbar">
+
+          <input
+            id="buscaAcesso"
+            type="search"
+            placeholder="Buscar nome, cargo ou e-mail..."
+          >
+
+          <select id="filtroStatusAcesso">
+            <option value="todos">
+              Todos
+            </option>
+
+            <option value="pendente" selected>
+              Pendentes
+            </option>
+
+            <option value="aprovado">
+              Aprovados
+            </option>
+
+            <option value="recusado">
+              Recusados
+            </option>
+          </select>
+
+        </div>
+
+        <div
+          id="listaSolicitacoes"
+          class="access-request-list"
+        ></div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <div
+    id="toastAdmin"
+    class="toast"
+  ></div>
+
+  <script
+    type="module"
+    src="menu.js?v=2.7.0"
+  ></script>
+
+  <script
+    type="module"
+    src="admin-acessos.js?v=2.5.2"
+  ></script>
+
+</body>
+</html>

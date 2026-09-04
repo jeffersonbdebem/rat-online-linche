@@ -1,0 +1,42 @@
+LINCHE FIELD 2.0 - PACOTE DE TESTE
+
+Principais melhorias:
+- dashboard.html como nova central operacional;
+- menu lateral único em menu.js;
+- visual compartilhado em app.css;
+- Kanban preservado e integrado ao menu;
+- RAT, Histórico, Clientes e Relatórios preservados;
+- correção do salvamento/numeração da RAT em script.js;
+- regras do Firestore incluídas para ambiente de validação.
+
+PUBLICAÇÃO RECOMENDADA
+
+1. Extraia o conteúdo por cima de uma CÓPIA do projeto atual.
+2. Abra o PowerShell na pasta do projeto.
+3. Publique somente o Hosting primeiro:
+   firebase deploy --only hosting
+4. Teste:
+   https://rat-online-linche.web.app/dashboard.html
+5. Para publicar também as regras de validação:
+   firebase deploy --only firestore:rules
+
+ATENÇÃO
+As regras incluídas permitem leitura e escrita públicas para facilitar o teste.
+Antes do uso definitivo, altere para autenticação obrigatória.
+
+PÁGINAS
+dashboard.html   Central operacional
+kanban.html      Visitas técnicas
+index.html       Nova RAT
+historico.html   Histórico
+clientes.html    Clientes
+relatorios.html  Relatórios
+login.html       Login
+
+
+ATUALIZAÇÃO 2.1 - HISTÓRICO E PDF
+- Histórico agora possui os botões "Ver RAT" e "Abrir PDF".
+- Foi criada a página rat-detalhe.html.
+- O PDF é reconstruído a partir dos dados salvos no Firestore.
+- Novas RATs passam a salvar a imagem da assinatura no documento.
+- RATs antigas continuam abrindo, mas podem não exibir a assinatura porque ela não era armazenada anteriormente.

@@ -1,0 +1,53 @@
+LINCHE FIELD 2.2 - VISITA + RAT
+==================================
+
+Alterações aplicadas diretamente no projeto:
+
+1. KANBAN
+- Ao arrastar uma visita SEM RAT para "Finalização", a RAT abre automaticamente.
+- Ao arrastar uma visita SEM RAT direto para "Concluída", a RAT abre automaticamente.
+- Enquanto a RAT é preenchida, a visita fica em "Finalização".
+- Se a RAT já estiver vinculada, o cartão pode seguir normalmente para Concluída.
+
+2. RAT
+- Recebe automaticamente o ID da visita pela URL.
+- Pré-preenche cliente, contato, telefone, endereço, problema, técnico, data e horário.
+- Tenta complementar os dados usando a coleção "clientes".
+- Marca automaticamente o tipo "Visita Técnica".
+- Exibe aviso de que a RAT está vinculada a uma visita.
+
+3. ASSINATURA MOBILE
+- O canvas aceita toque no celular.
+- O CSS usa touch-action:none.
+- A assinatura não é apagada ao redimensionar/orientar a tela.
+
+4. VÍNCULO FIRESTORE
+Na RAT:
+- visitaId
+- origem = "visita"
+
+Na visita:
+- ratId
+- ratNumero
+- ratFinalizada
+- assinaturaColetada
+- pdfGerado
+- finalizadaEm (quando aplicável)
+
+5. CONCLUSÃO
+Se o técnico tentou mover direto para Concluída:
+RAT -> assinatura -> PDF -> visita = Concluída -> volta ao Kanban.
+
+Se moveu para Finalização:
+RAT -> assinatura -> PDF -> visita permanece em Finalização -> volta ao Kanban.
+
+6. DEPLOY
+Dentro da pasta do projeto:
+
+firebase deploy --only hosting
+
+Depois teste em computador e celular.
+
+IMPORTANTE:
+Esta versão foi montada sobre o Linche Field 2.1, preservando Dashboard,
+Histórico, Clientes, Relatórios, visual unificado e PDF do Histórico.

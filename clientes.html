@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clientes - RAT Online Linche TI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?v=2.7.0" />
+</head>
+<body>
+  <div class="app-shell">
+  <aside class="sidebar">
+</aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1>Clientes</h1>
+        <p>Cadastre, pesquise e atualize os clientes usados nas RATs.</p>
+      </div>
+      <div class="rat-box">
+        <small>Total</small>
+        <strong id="totalClientes">0</strong>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2 id="tituloForm">Cadastrar Cliente</h2>
+
+      <form id="clienteForm">
+        <input type="hidden" id="clienteId">
+
+        <div class="grid two">
+          <label>Nome / Razão Social
+            <input id="razaoSocial" required>
+          </label>
+          <label>CPF / CNPJ
+            <input id="cnpj">
+          </label>
+        </div>
+
+        <div class="grid three">
+          <label>Endereço / Bairro
+            <input id="endereco">
+          </label>
+          <label>Cidade
+            <input id="cidade">
+          </label>
+          <label>CEP
+            <input id="cep">
+          </label>
+        </div>
+
+        <div class="grid three">
+          <label>Solicitante / Contato
+            <input id="contato">
+          </label>
+          <label>E-mail
+            <input id="email" type="email">
+          </label>
+          <label>Fone
+            <input id="fone">
+          </label>
+        </div>
+
+        <div class="grid two">
+          <label>Status
+            <select id="ativo">
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+          </label>
+          <label>Observação
+            <input id="observacao">
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="secondary" id="btnCancelarEdicao">Cancelar edição</button>
+          <button type="submit" class="primary">Salvar cliente</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Lista de Clientes</h2>
+
+      <div class="grid two">
+        <label>Pesquisar
+          <input id="buscaCliente" placeholder="Digite nome, CNPJ, cidade, e-mail...">
+        </label>
+        <label>Filtro
+          <select id="filtroStatus">
+            <option value="todos">Todos</option>
+            <option value="ativos">Ativos</option>
+            <option value="inativos">Inativos</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>CNPJ</th>
+              <th>Cidade</th>
+              <th>Contato</th>
+              <th>Telefone</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="clientesTabela">
+            <tr>
+              <td colspan="7">Carregando clientes...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="clientes.js?v=2.5.2"></script>
+    </div><!-- app-shell -->
+  <script type="module" src="menu.js?v=2.7.0"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Linche Field | Redefinir senha</title>
+<link rel="stylesheet" href="app.css?v=2.6.0">
+<style>
+.login-page{min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at top,#173525,#08110c);padding:20px}
+.login-card{width:min(410px,100%);background:#fff;border-radius:20px;padding:32px;box-shadow:0 25px 70px rgba(0,0,0,.3)}
+.login-logo{display:block;max-width:190px;margin:0 auto 18px}.login-card h1{text-align:center;margin:0}.login-card>p{text-align:center;color:#68766e}
+.login-card label{margin-top:14px}.full{width:100%;margin-top:18px}.login-message{min-height:22px;margin:14px 0 0;text-align:center}
+.login-message.error{color:#e74d57}.login-message.success{color:#008f50}.login-back{margin-top:14px;text-align:center;font-size:12px}
+.login-back a{color:#008f50;font-weight:800;text-decoration:none}
+</style>
+</head>
+<body class="login-page">
+<div class="login-card">
+<img src="assets/logo-linche.png" class="login-logo" alt="Logo Linche">
+<h1>Redefinir senha</h1>
+<p>Informe seu e-mail corporativo para receber o link de redefinição.</p>
+<label>E-mail<input type="email" id="emailReset" placeholder="seuemail@lincheti.com.br" autocomplete="email"></label>
+<button class="primary full" id="btnResetSenha" type="button">Enviar link de redefinição</button>
+<p class="login-message" id="resetMensagem"></p>
+<div class="login-back"><a href="login.html">← Voltar para o login</a></div>
+</div>
+<script type="module" src="reset-senha.js?v=2.6.0"></script>
+</body>
+</html>

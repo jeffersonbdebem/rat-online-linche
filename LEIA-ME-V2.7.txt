@@ -1,0 +1,68 @@
+LINCHE FIELD V2.7 — DASHBOARD OPERACIONAL REAL
+=================================================
+
+BASE
+----
+Esta versão foi montada sobre:
+- V2.5.2.1 Login corrigido
+- Patch V2.6 Reset de senha + Usuários
+
+NOVO DASHBOARD
+--------------
+Dados reais do Firestore:
+
+- Visitas do dia
+- Em rota
+- Em atendimento
+- Finalização
+- Concluídas
+- Atrasadas
+- Agenda de hoje ordenada por horário
+- Últimas RATs
+- Usuários ativos para gestão
+- Solicitações pendentes para o administrador
+- Atalhos de acordo com o perfil
+- Saudação com nome do usuário
+- Atualização automática das visitas e RATs
+
+PERFIS
+------
+Analista:
+- vê operação, agenda, RATs e atalhos operacionais
+
+Consulta:
+- dashboard de consulta, histórico e clientes
+
+Gestor:
+- dashboard operacional + indicador de usuários ativos
+
+Administrador Jefferson:
+- dashboard completo
+- usuários ativos
+- solicitações de acesso pendentes
+
+ATRASO
+------
+Uma visita é considerada atrasada quando:
+- é de hoje;
+- possui horário;
+- horário já passou;
+- ainda não está concluída.
+
+DEPLOY
+------
+firebase deploy --only hosting
+
+Não é necessário mudar novamente as regras do Firestore
+para esta versão.
+
+TESTE
+-----
+1. Login como Jefferson
+2. Dashboard
+3. Criar uma visita para hoje
+4. Alterar os status no Kanban
+5. Confirmar atualização automática no Dashboard
+6. Gerar uma RAT
+7. Confirmar que ela aparece em Últimas RATs
+8. Testar no celular

@@ -1,0 +1,121 @@
+LINCHE FIELD 2.5 — LOGIN E PERFIS
+========================================
+
+O QUE ESTA VERSÃO FAZ
+---------------------
+- Protege Dashboard, Visitas, RAT, Histórico, Clientes, Relatórios e detalhe da RAT.
+- Usuário não autenticado volta para login.html.
+- Login redireciona para dashboard.html.
+- Cada usuário passa a ter perfil em Firestore: usuarios/{UID}.
+- Primeiro login cria automaticamente o perfil como "analista".
+- Usuário inativo é desconectado.
+- Menu muda de acordo com o perfil.
+- Menu mostra nome, perfil e botão Sair.
+- Visitas e RATs passam a registrar UID/nome/e-mail de quem criou.
+- Analista e Consulta ficam somente em modo leitura em Clientes.
+- Analista não vê Relatórios.
+- Exclusão de visitas fica restrita a Gestor/Admin.
+- Firestore deixa de aceitar acesso sem login.
+
+PERFIS
+------
+admin:
+  acesso completo
+
+gestor:
+  Dashboard, Visitas, RAT, Histórico, Clientes, Relatórios
+
+analista:
+  Dashboard, Visitas, RAT, Histórico, consulta de Clientes
+
+consulta:
+  Dashboard, Histórico, consulta de Clientes, Relatórios
+
+
+PASSO 1 — PUBLICAR O SITE
+-------------------------
+firebase deploy --only hosting
+
+
+PASSO 2 — PUBLICAR AS REGRAS
+----------------------------
+ATENÇÃO: faça o Passo 3 logo após o primeiro login.
+
+firebase deploy --only firestore:rules
+
+
+PASSO 3 — PRIMEIRO LOGIN DO GESTOR
+----------------------------------
+1. Entre no sistema normalmente.
+2. O sistema criará automaticamente:
+   Firestore > usuarios > SEU_UID
+3. O perfil será criado como:
+   perfil: "analista"
+4. No Firebase Console, altere manualmente o campo:
+   perfil
+   de:
+   analista
+   para:
+   admin
+   ou:
+   gestor
+
+IMPORTANTE:
+O valor deve ser exatamente:
+admin
+gestor
+analista
+consulta
+
+
+PASSO 4 — CRIAR ANALISTAS
+-------------------------
+Firebase Console:
+Authentication
+> Users
+> Add user
+
+Crie:
+- e-mail
+- senha inicial
+
+Depois o analista acessa login.html uma vez.
+O perfil usuarios/{UID} será criado automaticamente como "analista".
+
+
+DESATIVAR UM USUÁRIO
+--------------------
+Firestore:
+usuarios
+> UID do usuário
+> campo ativo
+> false
+
+No próximo acesso ele será desconectado.
+
+
+TESTE RECOMENDADO
+-----------------
+1. Seu login como admin/gestor.
+2. Dashboard.
+3. Kanban.
+4. Criar visita.
+5. RAT e assinatura.
+6. Histórico.
+7. Clientes.
+8. Relatórios.
+9. Sair.
+10. Criar um usuário analista.
+11. Entrar como analista.
+12. Confirmar que Relatórios não aparece.
+13. Confirmar que Clientes abre somente para consulta.
+14. Confirmar que Visitas/RAT funcionam.
+
+
+IMPORTANTE SOBRE SEGURANÇA
+--------------------------
+A V2.5 já exige autenticação real no Firestore.
+
+A gestão completa de contas (criar usuário pelo próprio Linche Field,
+reset de senha, alteração segura de perfil etc.) ficará para a V2.6,
+quando entraremos com backend/Admin SDK.

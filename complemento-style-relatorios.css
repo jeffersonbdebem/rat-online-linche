@@ -1,0 +1,69 @@
+/* Complemento visual para relatórios */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabela th,
+.tabela td {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: top;
+}
+
+.tabela th {
+  color: #064e3b;
+  background: #ecfdf5;
+  font-weight: 700;
+}
+
+.metric {
+  display: block;
+  font-size: 34px;
+  color: #006b45;
+  margin-top: 10px;
+}
+
+.report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.report-item {
+  width: 100%;
+}
+
+.report-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.report-bar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.report-bar-fill {
+  height: 100%;
+  background: #006b45;
+  border-radius: 999px;
+}
+
+.small {
+  padding: 6px 10px;
+  font-size: 12px;
+}

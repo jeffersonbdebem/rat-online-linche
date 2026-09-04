@@ -1,0 +1,47 @@
+LINCHE FIELD V2.5.2.1 — LOGIN CORRIGIDO
+===============================================
+
+CORREÇÕES
+---------
+1. Restaurado o visual bonito do botão verde "Entrar".
+2. Adicionado "Ainda não possui acesso? Solicitar acesso".
+3. Jefferson (jefferson.bem@lincheti.com.br) volta a acessar normalmente.
+4. A conta administrativa não depende de emailVerified.
+5. Novos usuários continuam obrigados a confirmar o e-mail.
+6. Solicitações pendentes e recusadas continuam bloqueadas.
+7. Mantida a tela cadastro.html.
+8. Mantida a tela administrativa admin-acessos.html.
+9. Mantidas regras e restante da V2.5.2.
+
+DEPLOY
+------
+Como as regras da V2.5.2 não mudaram nesta correção:
+
+firebase deploy --only hosting
+
+Depois:
+- feche a aba antiga;
+- abra login.html novamente;
+- use Ctrl + F5 se necessário.
+
+TESTE DO ADMIN
+--------------
+E-mail:
+jefferson.bem@lincheti.com.br
+
+O administrador deve entrar mesmo se o Firebase Authentication
+mostrar emailVerified = false.
+
+TESTE DO NOVO USUÁRIO
+---------------------
+Login > Solicitar acesso
+> cadastro.html
+> cria conta
+> recebe confirmação por e-mail
+> confirma e-mail
+> tenta entrar
+> recebe aviso de acesso pendente
+> Jefferson entra
+> Acessos
+> Aprovar
+> novo usuário consegue entrar.

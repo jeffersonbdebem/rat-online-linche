@@ -1,0 +1,12 @@
+LINCHE FIELD V2.8.2 — TV HIGH VISIBILITY
+
+- Tema claro.
+- Fundo branco gelo/cinza claro.
+- Cards brancos.
+- Fontes maiores em horário, cliente, técnico e indicadores.
+- Próxima visita mais destacada.
+- Atrasos em vermelho, sem escurecer o painel inteiro.
+- Mantida atualização em tempo real e tela cheia.
+
+Deploy:
+firebase deploy --only hosting

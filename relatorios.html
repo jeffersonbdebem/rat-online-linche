@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatórios - RAT Online Linche TI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?v=2.7.0" />
+</head>
+<body>
+  <div class="app-shell">
+  <aside class="sidebar">
+</aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1>Relatórios de RATs</h1>
+        <p>Analise os atendimentos por período, cliente, técnico, status e tipo.</p>
+      </div>
+      <div class="rat-box">
+        <small>Total filtrado</small>
+        <strong id="totalFiltrado">0</strong>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>Filtros</h2>
+
+      <div class="grid three">
+        <label>Data inicial
+          <input type="date" id="dataInicial">
+        </label>
+
+        <label>Data final
+          <input type="date" id="dataFinal">
+        </label>
+
+        <label>Status
+          <select id="filtroStatus">
+            <option value="">Todos</option>
+            <option value="Aguardando Aprovação">Aguardando Aprovação</option>
+            <option value="Aguardando Peça">Aguardando Peça</option>
+            <option value="Pronto">Pronto</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="grid three">
+        <label>Cliente
+          <input id="filtroCliente" placeholder="Nome do cliente">
+        </label>
+
+        <label>Técnico
+          <input id="filtroTecnico" placeholder="Nome do técnico">
+        </label>
+
+        <label>Atendimento
+          <select id="filtroAtendimento">
+            <option value="">Todos</option>
+            <option value="Linche">Linche</option>
+            <option value="Visita Técnica">Visita Técnica</option>
+            <option value="Remoto">Remoto</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" type="button" id="btnLimparFiltros">Limpar filtros</button>
+        <button class="primary" type="button" id="btnExportarCsv">Exportar Excel/CSV</button>
+      </div>
+    </section>
+
+    <section class="grid four">
+      <div class="mini-card">
+        <h3>Total de RATs</h3>
+        <strong class="metric" id="metricTotal">0</strong>
+      </div>
+
+      <div class="mini-card">
+        <h3>Aguardando Aprovação</h3>
+        <strong class="metric" id="metricAprovacao">0</strong>
+      </div>
+
+      <div class="mini-card">
+        <h3>Aguardando Peça</h3>
+        <strong class="metric" id="metricPeca">0</strong>
+      </div>
+
+      <div class="mini-card">
+        <h3>Pronto</h3>
+        <strong class="metric" id="metricPronto">0</strong>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>RATs por Status</h2>
+        <div id="statusResumo" class="report-list"></div>
+      </div>
+
+      <div class="card">
+        <h2>RATs por Atendimento</h2>
+        <div id="atendimentoResumo" class="report-list"></div>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>Top Clientes</h2>
+        <div id="clientesResumo" class="report-list"></div>
+      </div>
+
+      <div class="card">
+        <h2>Top Técnicos</h2>
+        <div id="tecnicosResumo" class="report-list"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>RATs filtradas</h2>
+
+      <div class="table-wrapper">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>RAT</th>
+              <th>Cliente</th>
+              <th>Técnico</th>
+              <th>Status</th>
+              <th>Atendimento</th>
+              <th>Data</th>
+              <th>Problema</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaRats">
+            <tr>
+              <td colspan="7">Carregando RATs...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="relatorios.js?v=2.5.2"></script>
+    </div><!-- app-shell -->
+  <script type="module" src="menu.js?v=2.7.0"></script>
+</body>
+</html>

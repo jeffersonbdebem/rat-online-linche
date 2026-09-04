@@ -1,0 +1,21 @@
+LINCHE FIELD 2.4 - MOBILE + ASSINATURA PDF
+
+Correções desta versão:
+- RAT otimizada para celular.
+- Campos empilhados em telas pequenas.
+- Botões em largura total no celular.
+- Campo de assinatura reduzido para 125px no celular.
+- Assinatura continua funcionando por toque.
+- Redimensionamento do canvas preserva o desenho.
+- Assinatura do PDF agora é recortada e inserida mantendo a proporção original.
+- A imagem não é mais esticada para 42x12, evitando assinatura torta.
+- Cache atualizado para v2.4.
+
+Deploy:
+firebase deploy --only hosting
+
+Depois no celular:
+1. Feche a aba antiga.
+2. Abra novamente o site.
+3. Se necessário, limpe os dados/cache do navegador.
+4. Teste uma nova RAT vinculada a uma visita.

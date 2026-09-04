@@ -1,0 +1,26 @@
+LINCHE FIELD V2.9.2 — PRIMEIRA LEITURA REAL DO MSP DESK
+
+OBJETIVO
+- Conectar o backend Linche ao relatório personalizado do MSP Desk.
+- Manter a API Key somente no backend.
+- Validar a leitura real antes de gravar qualquer dado no Firestore.
+
+CONFIGURAÇÃO
+1. Entre em backend/.env
+2. Preencha MSPDESK_API_KEY com a chave criada no MSP Desk.
+3. MSPDESK_REPORT_URL já aponta para o relatório personalizado Linche Field - Integração.
+
+BACKEND
+GET /api/health
+GET /api/integrations/mspdesk/status
+POST /api/integrations/mspdesk/test
+GET /api/integrations/mspdesk/tickets?page=0&size=20
+
+AUTENTICAÇÃO DO RELATÓRIO
+- Método: GET
+- Header: X-API-Key
+- Paginação: page começando em 0 e size
+
+IMPORTANTE
+Esta versão ainda NÃO cria visitas automaticamente. Primeiro validamos o payload real devolvido pelo MSP Desk. Isso evita inventar mapeamentos e duplicar registros.
+Depois da primeira leitura real, a próxima etapa será mapear ID/Nº Ticket, cliente, contato, técnico, status, descrição e data/horário para o modelo de Visitas do Linche Field.

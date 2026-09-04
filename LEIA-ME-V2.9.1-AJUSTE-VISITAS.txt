@@ -1,0 +1,12 @@
+LINCHE FIELD V2.9.1 - AJUSTE OPERACIONAL DE VISITAS
+
+ALTERAÇÕES:
+- Visita só aparece como atrasada enquanto estiver em Agendada ou Em rota.
+- Ao entrar em Em atendimento, Finalização ou Concluída, o alerta de atraso desaparece.
+- Regra aplicada no Kanban, Dashboard e Painel TV.
+- Cada card do Kanban ganhou botão de etapa com menu rápido.
+- É possível mudar entre Agendada, Em rota, Em atendimento, Finalização e Concluída sem arrastar o card.
+- O fluxo já existente de RAT continua sendo respeitado ao selecionar Finalização/Concluída.
+- Alterações de data e horário continuam recalculando o atraso com os valores atuais da visita.
+
+A V2.8.2 permanece como rollback estável anterior ao ciclo de integrações.

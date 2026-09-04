@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Linche Field | Painel TV</title>
+<link rel="stylesheet" href="painel-tv.css?v=2.8.2">
+</head>
+
+<body>
+
+<header class="tv-header">
+
+  <div class="tv-brand">
+    <img src="assets/logo-linche-horizontal.png" alt="Linche">
+
+    <div>
+      <strong>Central de Visitas</strong>
+      <small>Operação de campo em tempo real</small>
+    </div>
+  </div>
+
+  <div class="tv-center">
+    <span class="live-dot"></span>
+    <strong>AO VIVO</strong>
+    <span id="ultimaAtualizacao">Conectando...</span>
+  </div>
+
+  <div class="tv-clock">
+    <strong id="relogio">--:--</strong>
+    <small id="dataAtual">--</small>
+
+    <button
+      id="btnFullscreen"
+      title="Tela cheia"
+      aria-label="Tela cheia"
+    >
+      ⛶
+    </button>
+  </div>
+
+</header>
+
+<section class="tv-operation-strip">
+
+  <div class="operation-text">
+    <span>OPERAÇÃO LINCHE</span>
+    <strong id="faixaOperacao">
+      Carregando operação do dia...
+    </strong>
+  </div>
+
+  <div class="next-visit">
+    <small>PRÓXIMA VISITA</small>
+
+    <div id="proximaVisita">
+      <strong>--:--</strong>
+      <span>Nenhuma visita futura</span>
+    </div>
+  </div>
+
+</section>
+
+<section class="tv-summary">
+
+  <div>
+    <small>VISITAS HOJE</small>
+    <strong id="totalHoje">0</strong>
+  </div>
+
+  <div>
+    <small>EM CAMPO</small>
+    <strong id="totalCampo">0</strong>
+  </div>
+
+  <div>
+    <small>ATRASADAS</small>
+    <strong id="totalAtrasadas">0</strong>
+  </div>
+
+  <div>
+    <small>CONCLUÍDAS</small>
+    <strong id="totalConcluidas">0</strong>
+  </div>
+
+</section>
+
+<main id="tvBoard" class="tv-board">
+
+  <section class="tv-column" data-status="agendada">
+    <header>
+      <span>AGENDADAS</span>
+      <b class="count">0</b>
+    </header>
+
+    <div class="tv-list"></div>
+  </section>
+
+  <section class="tv-column" data-status="em_rota">
+    <header>
+      <span>EM ROTA</span>
+      <b class="count">0</b>
+    </header>
+
+    <div class="tv-list"></div>
+  </section>
+
+  <section class="tv-column" data-status="em_atendimento">
+    <header>
+      <span>EM ATENDIMENTO</span>
+      <b class="count">0</b>
+    </header>
+
+    <div class="tv-list"></div>
+  </section>
+
+  <section class="tv-column" data-status="finalizacao">
+    <header>
+      <span>FINALIZAÇÃO</span>
+      <b class="count">0</b>
+    </header>
+
+    <div class="tv-list"></div>
+  </section>
+
+  <section class="tv-column" data-status="concluida">
+    <header>
+      <span>CONCLUÍDAS</span>
+      <b class="count">0</b>
+    </header>
+
+    <div class="tv-list"></div>
+  </section>
+
+</main>
+
+<footer class="tv-footer">
+
+  <span>
+    Linche Field • Painel Operacional
+  </span>
+
+  <div class="tv-footer-legend">
+    <span><i class="legend-dot route"></i> Em rota</span>
+    <span><i class="legend-dot service"></i> Atendimento</span>
+    <span><i class="legend-dot late"></i> Atraso</span>
+  </div>
+
+  <a href="dashboard.html">
+    Sair do Painel TV
+  </a>
+
+</footer>
+
+<script type="module" src="painel-tv.js?v=2.8.2"></script>
+
+</body>
+</html>

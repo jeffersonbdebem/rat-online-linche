@@ -1,0 +1,18 @@
+.sidebar a.menu { text-decoration: none; display: block; }
+.sair { margin-top: auto; }
+.user-box { font-size: 13px; background: #fff; border: 1px solid #d8e2dc; border-radius: 10px; padding: 10px 14px; color: #00643a; font-weight: 700; }
+.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at top left, #0b7a46, #031813 50%, #000); }
+.login-card { width: 360px; background: #fff; border-radius: 18px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+.login-logo { width: 220px; display: block; margin: 0 auto 18px; }
+.login-card h1 { margin: 0; color: #00643a; }
+.login-card p { color: #5b6870; }
+.login-card label { display: block; font-weight: 700; font-size: 13px; margin-top: 14px; }
+.login-card input, .history-toolbar input { width: 100%; box-sizing: border-box; border: 1px solid #cfd8dc; border-radius: 8px; padding: 11px; margin-top: 6px; }
+.full { width: 100%; margin-top: 18px; }
+.login-error { color: #b00020 !important; font-weight: 700; min-height: 20px; }
+.history-toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 18px; }
+.table-wrap { overflow-x: auto; }
+.history-table { width: 100%; border-collapse: collapse; background: #fff; }
+.history-table th, .history-table td { padding: 12px; border-bottom: 1px solid #e0e6e3; text-align: left; font-size: 14px; }
+.history-table th { background: #f3f7f5; color: #00643a; }
+.history-table tr:hover { background: #f8fbf9; }

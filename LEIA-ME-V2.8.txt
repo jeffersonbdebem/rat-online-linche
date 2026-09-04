@@ -1,0 +1,34 @@
+LINCHE FIELD V2.8 — PAINEL TV / CENTRAL DE VISITAS
+
+Base: ZIP operacional enviado e validado pelo usuário.
+
+NOVO:
+- painel-tv.html
+- painel-tv.js
+- painel-tv.css
+- opção Painel TV no menu
+- leitura da mesma coleção 'visitas'
+- atualização em tempo real via Firestore
+- somente visitas do dia
+- colunas Agendadas, Em rota, Em atendimento, Finalização e Concluídas
+- cliente, horário, prioridade, técnico e resumo do problema
+- alerta visual de visita atrasada
+- totais do dia, em campo, atrasadas e concluídas
+- relógio/data
+- botão de tela cheia
+- painel somente leitura; nenhuma edição pela TV
+- atualização do cálculo de atraso a cada 30 segundos
+
+SEGURANÇA:
+O painel continua protegido pelo login do Linche Field e aceita os perfis existentes.
+
+DEPLOY:
+firebase deploy --only hosting
+
+TESTE:
+1. Login
+2. Menu > Painel TV
+3. Clique no botão de tela cheia
+4. Mantenha Painel TV aberto
+5. Em outro navegador/aba mova uma visita no Kanban
+6. A TV deve atualizar automaticamente.

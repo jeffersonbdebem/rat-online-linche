@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Linche Field | Dashboard
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="app.css?v=2.7.0"
+  />
+
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <aside class="sidebar"></aside>
+
+    <main class="main-content">
+
+      <header class="topbar dashboard-topbar">
+
+        <div>
+
+          <p class="eyebrow">
+            OPERAÇÃO EM TEMPO REAL
+          </p>
+
+          <h1 id="dashboardSaudacao">
+            Dashboard
+          </h1>
+
+          <p>
+            Visão rápida da operação de campo da Linche.
+          </p>
+
+        </div>
+
+        <div class="dashboard-live">
+
+          <span class="dashboard-live-dot"></span>
+
+          <div>
+            <strong>
+              Atualização automática
+            </strong>
+
+            <small id="dashboardAtualizado">
+              Conectando...
+            </small>
+          </div>
+
+        </div>
+
+      </header>
+
+      <section class="ops-metrics">
+
+        <article class="ops-metric">
+          <span class="ops-metric-icon neutral">
+            ▦
+          </span>
+
+          <div>
+            <small>
+              Visitas hoje
+            </small>
+
+            <strong id="metricHoje">
+              0
+            </strong>
+          </div>
+        </article>
+
+        <article class="ops-metric">
+          <span class="ops-metric-icon blue">
+            →
+          </span>
+
+          <div>
+            <small>
+              Em rota
+            </small>
+
+            <strong id="metricEmRota">
+              0
+            </strong>
+          </div>
+        </article>
+
+        <article class="ops-metric">
+          <span class="ops-metric-icon green">
+            ●
+          </span>
+
+          <div>
+            <small>
+              Em atendimento
+            </small>
+
+            <strong id="metricAtendimento">
+              0
+            </strong>
+          </div>
+        </article>
+
+        <article class="ops-metric">
+          <span class="ops-metric-icon orange">
+            ◷
+          </span>
+
+          <div>
+            <small>
+              Finalização
+            </small>
+
+            <strong id="metricFinalizacao">
+              0
+            </strong>
+          </div>
+        </article>
+
+        <article class="ops-metric">
+          <span class="ops-metric-icon purple">
+            ✓
+          </span>
+
+          <div>
+            <small>
+              Concluídas
+            </small>
+
+            <strong id="metricConcluidas">
+              0
+            </strong>
+          </div>
+        </article>
+
+        <article class="ops-metric">
+          <span class="ops-metric-icon red">
+            !
+          </span>
+
+          <div>
+            <small>
+              Atrasadas
+            </small>
+
+            <strong id="metricAtrasadas">
+              0
+            </strong>
+          </div>
+        </article>
+
+      </section>
+
+      <section class="ops-grid-main">
+
+        <article class="card dashboard-panel">
+
+          <div class="dashboard-panel-header">
+
+            <div>
+              <h2>
+                Agenda de hoje
+              </h2>
+
+              <p>
+                Visitas ordenadas por horário.
+              </p>
+            </div>
+
+            <a
+              class="dashboard-panel-link"
+              href="kanban.html"
+            >
+              Abrir visitas →
+            </a>
+
+          </div>
+
+          <div
+            id="agendaHoje"
+            class="today-agenda"
+          >
+            <div class="dashboard-empty">
+              Carregando agenda...
+            </div>
+          </div>
+
+        </article>
+
+        <aside class="dashboard-side">
+
+          <article class="card dashboard-panel">
+
+            <div class="dashboard-panel-header">
+
+              <div>
+                <h2>
+                  Operação
+                </h2>
+
+                <p>
+                  Distribuição atual.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="status-summary">
+
+              <div class="status-summary-row">
+                <span>
+                  Agendadas
+                </span>
+
+                <strong id="summaryAgendadas">
+                  0
+                </strong>
+              </div>
+
+              <div class="status-summary-row">
+                <span>
+                  Em rota
+                </span>
+
+                <strong id="summaryRota">
+                  0
+                </strong>
+              </div>
+
+              <div class="status-summary-row">
+                <span>
+                  Em atendimento
+                </span>
+
+                <strong id="summaryAtendimento">
+                  0
+                </strong>
+              </div>
+
+              <div class="status-summary-row">
+                <span>
+                  Finalização
+                </span>
+
+                <strong id="summaryFinalizacao">
+                  0
+                </strong>
+              </div>
+
+              <div class="status-summary-row success">
+                <span>
+                  Concluídas
+                </span>
+
+                <strong id="summaryConcluidas">
+                  0
+                </strong>
+              </div>
+
+            </div>
+
+          </article>
+
+          <article
+            id="gestaoDashboard"
+            class="card dashboard-panel hidden"
+          >
+
+            <div class="dashboard-panel-header">
+
+              <div>
+                <h2>
+                  Gestão
+                </h2>
+
+                <p>
+                  Acessos e equipe.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="management-summary">
+
+              <a
+                id="linkUsuariosDashboard"
+                href="usuarios.html"
+                class="management-item"
+              >
+                <span>
+                  Usuários ativos
+                </span>
+
+                <strong id="metricUsuariosAtivosDashboard">
+                  —
+                </strong>
+              </a>
+
+              <a
+                id="linkAcessosDashboard"
+                href="admin-acessos.html"
+                class="management-item hidden"
+              >
+                <span>
+                  Acessos pendentes
+                </span>
+
+                <strong id="metricAcessosPendentes">
+                  —
+                </strong>
+              </a>
+
+            </div>
+
+          </article>
+
+        </aside>
+
+      </section>
+
+      <section class="ops-grid-bottom">
+
+        <article class="card dashboard-panel">
+
+          <div class="dashboard-panel-header">
+
+            <div>
+              <h2>
+                Últimas RATs
+              </h2>
+
+              <p>
+                Relatórios técnicos registrados recentemente.
+              </p>
+            </div>
+
+            <a
+              class="dashboard-panel-link"
+              href="historico.html"
+            >
+              Ver histórico →
+            </a>
+
+          </div>
+
+          <div
+            id="ultimasRats"
+            class="latest-rats"
+          >
+            <div class="dashboard-empty">
+              Carregando RATs...
+            </div>
+          </div>
+
+        </article>
+
+        <article class="card dashboard-panel">
+
+          <div class="dashboard-panel-header">
+
+            <div>
+              <h2>
+                Atalhos rápidos
+              </h2>
+
+              <p>
+                Ações frequentes.
+              </p>
+            </div>
+
+          </div>
+
+          <div
+            id="dashboardAtalhos"
+            class="dashboard-shortcuts"
+          >
+
+            <a
+              href="kanban.html"
+              data-perfis="admin,gestor,analista"
+            >
+              <span>
+                ▦
+              </span>
+
+              <div>
+                <strong>
+                  Visitas
+                </strong>
+
+                <small>
+                  Abrir Kanban
+                </small>
+              </div>
+            </a>
+
+            <a
+              href="index.html"
+              data-perfis="admin,gestor,analista"
+            >
+              <span>
+                +
+              </span>
+
+              <div>
+                <strong>
+                  Nova RAT
+                </strong>
+
+                <small>
+                  Atendimento avulso
+                </small>
+              </div>
+            </a>
+
+            <a
+              href="historico.html"
+              data-perfis="admin,gestor,analista,consulta"
+            >
+              <span>
+                ◷
+              </span>
+
+              <div>
+                <strong>
+                  Histórico
+                </strong>
+
+                <small>
+                  Consultar RATs
+                </small>
+              </div>
+            </a>
+
+            <a
+              href="clientes.html"
+              data-perfis="admin,gestor,analista,consulta"
+            >
+              <span>
+                ◇
+              </span>
+
+              <div>
+                <strong>
+                  Clientes
+                </strong>
+
+                <small>
+                  Base cadastrada
+                </small>
+              </div>
+            </a>
+
+          </div>
+
+        </article>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script
+    type="module"
+    src="menu.js?v=2.7.0"
+  ></script>
+
+  <script
+    type="module"
+    src="dashboard.js?v=2.7.0"
+  ></script>
+
+</body>
+
+</html>
