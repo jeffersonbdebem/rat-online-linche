@@ -1,0 +1,16 @@
+LINCH FIELD API - PACOTE PARA RENDER
+
+Este pacote é somente o backend. NÃO contém o arquivo .env nem a chave da API.
+
+No Render:
+Build Command: npm install
+Start Command: npm start
+
+Variáveis de ambiente:
+FRONTEND_ORIGIN=https://rat-online-linche.web.app
+MSPDESK_REPORT_URL=https://api.mspdesk.com.br/v1/custom-reports/integrations/f7269713-999c-435b-8eb8-5d4388852f56/execute
+MSPDESK_API_KEY=COLOCAR_A_CHAVE_AQUI_NO_RENDER
+
+PORT: não precisa cadastrar; o Render fornece automaticamente.
+
+O servidor está configurado para escutar em 0.0.0.0 e usar a porta fornecida pelo Render.
