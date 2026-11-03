@@ -88,6 +88,13 @@ if (sessao) {
       }
     ];
 
+    itensMenu.push({
+      nome: "Sobre",
+      arquivo: "sobre.html",
+      icone: "ⓘ",
+      perfis: ["admin","gestor","analista","consulta"]
+    });
+
     if (ehAdminFixo) {
       itensMenu.push({
         nome: "Acessos",
@@ -220,6 +227,7 @@ if (sessao) {
           src="assets/logo-linche-horizontal.png"
           alt="Linche Tecnologia"
         >
+        <small class="sidebar-developer-credit">Desenvolvido por<br><strong>Jefferson Bruno de Bem</strong></small>
       </div>
     `;
 

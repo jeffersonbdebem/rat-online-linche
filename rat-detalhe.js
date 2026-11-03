@@ -146,21 +146,26 @@ async function gerarPdfDaRat(rat) {
     pdf.setFont("helvetica", "bold");
     pdf.setTextColor(0, 100, 55);
     pdf.setFontSize(10);
-    pdf.text("LINCHE INFORMATICA LTDA ME", 92, 12);
+    pdf.text("LINCHE TECNOLOGIA E CONSULTORIA LTDA", 92, 12);
 
     pdf.setTextColor(20, 20, 20);
     pdf.setFont("helvetica", "normal");
     pdf.text("CNPJ: 07.138.235/0001-93", 92, 17);
-    pdf.text("R. Dr. Joaquim de Souza Campos Júnior, 74", 92, 22);
-    pdf.text("CEP: 13070-718 Bonfim - Campinas/SP", 92, 27);
-    pdf.text("Tel: (19) 3241-3200 | financeiro@lincheti.com.br", 92, 32);
+    pdf.text("Rua Jacareí, 28 - Parque Prado, Campinas - SP", 92, 22);
+    pdf.text("CEP: 13043-090", 92, 27);
+    pdf.text("Tel: (19) 3241-3200", 92, 32);
+    pdf.text("suporte@lincheti.com.br | www.lincheti.com.br", 92, 37);
 
-    pdf.rect(165, 10, 32, 22);
+    // Identificação da RAT: quadro compacto no canto superior direito.
+    pdf.rect(173, 10, 27, 22);
     pdf.setFont("helvetica", "bold");
-    pdf.text("RAT Nº", 174, 17);
+    pdf.setFontSize(8);
+    pdf.text("RAT Nº", 186.5, 16, { align: "center" });
+    pdf.setFontSize(7);
+    pdf.text("VERSÃO 1", 186.5, 20, { align: "center" });
     pdf.setTextColor(0, 100, 55);
     pdf.setFontSize(8);
-    pdf.text(numero, 166.5, 25, { maxWidth: 29 });
+    pdf.text(numero, 186.5, 26, { maxWidth: 24, align: "center" });
     pdf.setTextColor(20, 20, 20);
 
     titulo(pdf, "RELATÓRIO DE ATENDIMENTO TÉCNICO", 42);
@@ -218,7 +223,8 @@ async function gerarPdfDaRat(rat) {
 
     pdf.setFontSize(9);
     pdf.setTextColor(0, 100, 55);
-    pdf.text("linche.ti     lincheti     linchetecnologia", 73, 285);
+    pdf.setFontSize(8);
+    pdf.text("LINCHE FIELD • Desenvolvido por Jefferson Bruno de Bem", 67, 285);
 
     const blob = pdf.output("blob");
     const url = URL.createObjectURL(blob);

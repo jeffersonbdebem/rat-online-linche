@@ -1,1 +1,277 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Linche Field | Integrações</title><link rel="stylesheet" href="app.css?v=2.9.2"></head><body><div class="app-shell"><aside class="sidebar"></aside><main class="main-content"><header class="topbar"><div><p class="eyebrow">ADMINISTRAÇÃO</p><h1>Hub de Integrações</h1><p>Centralize as conexões do Linche Field com os sistemas da operação.</p></div><div class="integration-backend-status" id="backendStatus"><span class="integration-status-dot offline"></span><div><strong>Backend Linche</strong><small>Verificando conexão...</small></div></div></header><section class="integration-overview"><article class="mini-card"><small>Integrações disponíveis</small><strong>3</strong></article><article class="mini-card"><small>Conectadas</small><strong id="integracoesConectadas">0</strong></article><article class="mini-card"><small>Com atenção</small><strong id="integracoesAtencao">0</strong></article></section><section class="integration-grid"><article class="integration-card"><div class="integration-card-head"><div class="integration-logo">MSP</div><span class="integration-badge neutral" id="mspBadge">Não configurado</span></div><h2>MSP Desk</h2><p>Chamados, clientes, solicitantes, técnicos e agendamentos de visita.</p><div class="integration-capabilities"><span>Chamados</span><span>Clientes</span><span>Visitas</span></div><div class="integration-sync-info"><small>Última sincronização</small><strong id="mspUltimaSync">Nunca</strong></div><div class="integration-actions"><button class="primary" id="btnMspTestar" type="button">Testar conexão</button><button class="secondary" id="btnMspConfig" type="button">Configuração</button></div></article><article class="integration-card"><div class="integration-card-head"><div class="integration-logo">RMM</div><span class="integration-badge neutral">Planejado</span></div><h2>Datto RMM</h2><p>Equipamentos, inventário, saúde dos endpoints e alertas operacionais.</p><div class="integration-capabilities"><span>Endpoints</span><span>Inventário</span><span>Alertas</span></div><div class="integration-sync-info"><small>Status</small><strong>Fase seguinte</strong></div><div class="integration-actions"><button class="secondary" type="button" disabled>Em breve</button></div></article><article class="integration-card"><div class="integration-card-head"><div class="integration-logo">ACR</div><span class="integration-badge neutral">Planejado</span></div><h2>Acronis</h2><p>Proteção, backups, falhas, políticas e indicadores de continuidade.</p><div class="integration-capabilities"><span>Backup</span><span>Proteção</span><span>Falhas</span></div><div class="integration-sync-info"><small>Status</small><strong>Fase seguinte</strong></div><div class="integration-actions"><button class="secondary" type="button" disabled>Em breve</button></div></article></section><section class="card integration-architecture"><div class="dashboard-panel-header"><div><h2>Arquitetura da V2.9</h2><p>Credenciais ficam fora do navegador.</p></div></div><div class="architecture-flow"><div><strong>Linche Field</strong><small>Frontend</small></div><span>→</span><div class="highlight"><strong>API Linche</strong><small>Backend seguro</small></div><span>→</span><div><strong>MSP Desk</strong><small>Primeira integração</small></div></div><p class="architecture-note">Tokens, secrets e credenciais não são armazenados no JavaScript do navegador.</p></section></main></div><div id="toastIntegracao" class="toast"></div><div class="modal hidden" id="modalMsp"><div class="modal-card integration-modal"><div class="modal-head"><div><h2>MSP Desk</h2><p>Configuração do conector.</p></div><button type="button" class="modal-close" id="btnFecharMsp">×</button></div><div class="integration-warning">As credenciais devem ser configuradas no arquivo <code>backend/.env</code>, nunca nesta tela.</div><div class="integration-config-list"><div><small>URL do backend</small><strong id="backendUrlExibida">—</strong></div><div><small>Endpoint de teste</small><strong>/api/integrations/mspdesk/status</strong></div><div><small>Credenciais</small><strong>Backend / .env</strong></div></div><div class="actions"><button type="button" class="primary" id="btnTestarModalMsp">Testar agora</button><button type="button" class="secondary" id="btnConsultarMsp">Consultar chamados</button><button type="button" class="secondary" id="btnFecharMsp2">Fechar</button></div></div></div><script type="module" src="menu.js?v=2.9.2"></script><script type="module" src="integracoes.js?v=2.9.2"></script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Linche Field | Integrações</title>
+  <link rel="stylesheet" href="app.css?v=2.9.5">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar"></aside>
+
+    <main class="main-content integration-page">
+      <header class="topbar integration-topbar">
+        <div class="integration-title">
+          <p class="eyebrow">ADMINISTRAÇÃO · CONECTORES</p>
+          <h1>Hub de Integrações</h1>
+          <p>Centralize e monitore as conexões do Linche Field com os sistemas da operação.</p>
+        </div>
+
+        <div class="integration-backend-status" id="backendStatus" aria-live="polite">
+          <span class="integration-status-dot checking"></span>
+          <div>
+            <strong>Backend Linche</strong>
+            <small>Verificando conexão...</small>
+          </div>
+        </div>
+      </header>
+
+      <section class="integration-overview" aria-label="Resumo das integrações">
+        <article class="mini-card integration-stat">
+          <div class="integration-stat-icon">◎</div>
+          <div>
+            <small>Integrações disponíveis</small>
+            <strong>3</strong>
+          </div>
+        </article>
+        <article class="mini-card integration-stat">
+          <div class="integration-stat-icon success">✓</div>
+          <div>
+            <small>Conectadas</small>
+            <strong id="integracoesConectadas">0</strong>
+          </div>
+        </article>
+        <article class="mini-card integration-stat">
+          <div class="integration-stat-icon warning">!</div>
+          <div>
+            <small>Com atenção</small>
+            <strong id="integracoesAtencao">0</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="integration-section-heading">
+        <div>
+          <h2>Conectores</h2>
+          <p>Integrações ativas e previstas para o ecossistema Linche Field.</p>
+        </div>
+      </section>
+
+      <section class="integration-grid">
+        <article class="integration-card integration-card-primary">
+          <div class="integration-card-head">
+            <div class="integration-logo msp-logo">MSP</div>
+            <span class="integration-badge neutral" id="mspBadge">Verificando</span>
+          </div>
+          <div class="integration-card-title">
+            <div>
+              <h3>MSP Desk</h3>
+              <p>Central de chamados e primeira integração do Linche Field.</p>
+            </div>
+          </div>
+          <div class="integration-capabilities">
+            <span>Chamados</span><span>Clientes</span><span>Visitas</span><span>Técnicos</span>
+          </div>
+          <div class="integration-sync-info">
+            <div>
+              <small>Última comunicação</small>
+              <strong id="mspUltimaSync">Nunca</strong>
+            </div>
+            <span class="sync-indicator" id="mspSyncIndicator"></span>
+          </div>
+          <div class="integration-actions">
+            <button class="primary" id="btnMspTestar" type="button">Testar conexão</button>
+            <button class="secondary" id="btnMspConfig" type="button">Detalhes</button>
+          </div>
+        </article>
+
+        <article class="integration-card">
+          <div class="integration-card-head">
+            <div class="integration-logo rmm-logo">RMM</div>
+            <span class="integration-badge neutral">Planejado</span>
+          </div>
+          <div class="integration-card-title">
+            <div>
+              <h3>Datto RMM</h3>
+              <p>Monitoramento de endpoints, inventário e alertas operacionais.</p>
+            </div>
+          </div>
+          <div class="integration-capabilities">
+            <span>Endpoints</span><span>Inventário</span><span>Alertas</span>
+          </div>
+          <div class="integration-sync-info">
+            <div>
+              <small>Próxima etapa</small>
+              <strong>Integração RMM</strong>
+            </div>
+          </div>
+          <div class="integration-actions">
+            <button class="secondary" type="button" disabled>Em breve</button>
+          </div>
+        </article>
+
+        <article class="integration-card">
+          <div class="integration-card-head">
+            <div class="integration-logo acr-logo">ACR</div>
+            <span class="integration-badge neutral">Planejado</span>
+          </div>
+          <div class="integration-card-title">
+            <div>
+              <h3>Acronis</h3>
+              <p>Backups, proteção, falhas e indicadores de continuidade.</p>
+            </div>
+          </div>
+          <div class="integration-capabilities">
+            <span>Backup</span><span>Proteção</span><span>Falhas</span>
+          </div>
+          <div class="integration-sync-info">
+            <div>
+              <small>Próxima etapa</small>
+              <strong>Integração Acronis</strong>
+            </div>
+          </div>
+          <div class="integration-actions">
+            <button class="secondary" type="button" disabled>Em breve</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="card integration-results" id="integrationResults" hidden>
+        <div class="integration-results-head">
+          <div>
+            <p class="eyebrow">MSP DESK · LEITURA</p>
+            <h2>Chamados retornados</h2>
+            <p id="integrationResultsMeta">Aguardando consulta.</p>
+          </div>
+          <div class="integration-results-tools">
+            <label class="integration-page-size">
+              <span>Exibir</span>
+              <select id="mspPageSize" aria-label="Quantidade de chamados por página">
+                <option value="20" selected>20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+            <button class="secondary" type="button" id="btnLimparResultados">Limpar</button>
+          </div>
+        </div>
+        <div class="integration-table-wrap">
+          <table class="integration-table">
+            <thead>
+              <tr>
+                <th>Ticket</th>
+                <th>Assunto</th>
+                <th>Cliente</th>
+                <th>Status</th>
+                <th>Prioridade</th>
+                <th>Agente</th>
+              </tr>
+            </thead>
+            <tbody id="integrationResultsBody"></tbody>
+          </table>
+        </div>
+        <div class="integration-pagination" id="integrationPagination" hidden>
+          <span id="integrationPaginationInfo">Página 1</span>
+          <div>
+            <button class="secondary" type="button" id="btnMspAnterior">← Anterior</button>
+            <button class="secondary" type="button" id="btnMspProxima">Próxima →</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card integration-architecture">
+        <div class="integration-section-heading architecture-heading">
+          <div>
+            <p class="eyebrow">SEGURANÇA</p>
+            <h2>Arquitetura da integração</h2>
+            <p>As credenciais permanecem no backend e não são expostas ao navegador.</p>
+          </div>
+          <span class="architecture-version">V2.9</span>
+        </div>
+
+        <div class="architecture-flow">
+          <div>
+            <span class="architecture-step">01</span>
+            <strong>Linche Field</strong>
+            <small>Frontend</small>
+          </div>
+          <span class="architecture-arrow">→</span>
+          <div class="highlight">
+            <span class="architecture-step">02</span>
+            <strong>API Linche</strong>
+            <small>Backend seguro</small>
+          </div>
+          <span class="architecture-arrow">→</span>
+          <div>
+            <span class="architecture-step">03</span>
+            <strong>MSP Desk</strong>
+            <small>Primeira integração</small>
+          </div>
+        </div>
+
+        <div class="architecture-note">
+          <span>✓</span>
+          <p>Tokens, secrets e credenciais não são armazenados no JavaScript do navegador.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toastIntegracao" class="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal hidden" id="modalMsp" role="dialog" aria-modal="true" aria-labelledby="modalMspTitle">
+    <div class="modal-card integration-modal">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">CONECTOR · MSP DESK</p>
+          <h2 id="modalMspTitle">Configuração e diagnóstico</h2>
+          <p>Consulte a infraestrutura da integração sem expor credenciais.</p>
+        </div>
+        <button type="button" class="modal-close" id="btnFecharMsp" aria-label="Fechar">×</button>
+      </div>
+
+      <div class="integration-warning">
+        <strong>Credenciais protegidas</strong>
+        <span>As credenciais devem permanecer no <code>backend/.env</code>. Esta tela não solicita nem armazena API keys.</span>
+      </div>
+
+      <div class="integration-config-list">
+        <div>
+          <small>URL do backend</small>
+          <strong id="backendUrlExibida">—</strong>
+        </div>
+        <div>
+          <small>Teste de conexão</small>
+          <strong>POST /api/integrations/mspdesk/test</strong>
+        </div>
+        <div>
+          <small>Consulta de chamados</small>
+          <strong>GET /api/integrations/mspdesk/tickets?page=0&amp;size=20</strong>
+        </div>
+        <div>
+          <small>Credenciais</small>
+          <strong>Somente no backend / .env</strong>
+        </div>
+      </div>
+
+      <div class="integration-modal-status" id="modalMspStatus">
+        <span class="integration-status-dot checking"></span>
+        <div>
+          <strong>Status da integração</strong>
+          <small>Faça um teste para validar a comunicação.</small>
+        </div>
+      </div>
+
+      <div class="actions integration-modal-actions">
+        <button type="button" class="primary" id="btnTestarModalMsp">Testar agora</button>
+        <button type="button" class="secondary" id="btnConsultarMsp">Consultar chamados</button>
+        <button type="button" class="secondary" id="btnFecharMsp2">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="menu.js?v=2.9.6"></script>
+  <script type="module" src="integracoes.js?v=2.9.6"></script>
+</body>
+</html>

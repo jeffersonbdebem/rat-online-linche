@@ -1,0 +1,6 @@
+LINCHE FIELD V2.9.8 — IDENTIDADE NO PAINEL TV
+
+- Rodapé do Painel TV passa a exibir a identificação de desenvolvimento.
+- Crédito: Desenvolvido por Jefferson Bruno de Bem.
+- Mantida a identidade visual e a operação existentes do painel.
+- Atualizado cache-busting de painel-tv.css e painel-tv.js para 2.9.8.

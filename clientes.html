@@ -87,6 +87,38 @@
     <section class="card">
       <h2>Lista de Clientes</h2>
 
+      <div class="actions client-tools">
+        <button type="button" class="secondary" id="btnImportarClientes">📥 Importar CSV</button>
+        <button type="button" class="secondary" id="btnExportarClientes">📤 Exportar CSV</button>
+        <input type="file" id="arquivoClientesCsv" accept=".csv,text/csv" hidden>
+      </div>
+
+      <div id="importacaoClientes" class="import-panel" hidden>
+        <div class="import-header">
+          <div>
+            <strong>Importar clientes</strong>
+            <small>Use o mesmo formato gerado pelo botão Exportar CSV.</small>
+          </div>
+          <button type="button" class="secondary small" id="btnFecharImportacao">Fechar</button>
+        </div>
+        <div id="resumoImportacao" class="import-summary"></div>
+        <div class="table-wrapper">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Linha</th><th>Cliente</th><th>CNPJ</th><th>Resultado</th>
+              </tr>
+            </thead>
+            <tbody id="previewImportacao">
+              <tr><td colspan="4">Selecione um arquivo CSV.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="actions">
+          <button type="button" class="primary" id="btnConfirmarImportacao" disabled>Importar clientes</button>
+        </div>
+      </div>
+
       <div class="grid two">
         <label>Pesquisar
           <input id="buscaCliente" placeholder="Digite nome, CNPJ, cidade, e-mail...">
@@ -123,7 +155,7 @@
     </section>
   </main>
 
-  <script type="module" src="clientes.js?v=2.5.2"></script>
+  <script type="module" src="clientes.js?v=3.1.0"></script>
     </div><!-- app-shell -->
   <script type="module" src="menu.js?v=2.7.0"></script>
 </body>

@@ -1,0 +1,38 @@
+LINCHЕ FIELD V2.9.6 — MELHORIAS MSP DESK
+
+Alterações desta versão:
+
+1. Número do ticket
+- O mapeamento agora procura também o campo "Código do Ticket", "Número do Ticket", "Nº Ticket", "Ticket" e outras variações.
+- Isso corrige o cenário em que o relatório do MSP Desk devolve o número com um nome de coluna diferente do esperado.
+
+2. Link para o MSP Desk
+- O número do ticket passou a ser clicável e abre o MSP Desk em nova aba.
+- Se o próprio relatório fornecer uma URL/link do ticket, ela será usada.
+- Caso o relatório não forneça uma URL, o sistema usa MSPDESK_WEB_URL.
+- O padrão é https://api.mspdesk.com.br/login.
+
+3. Paginação
+- A consulta deixou de ficar presa visualmente a uma única página de 20 chamados.
+- É possível escolher 20, 50 ou 100 registros por página.
+- Botões Anterior/Próxima foram adicionados.
+- Quando o MSP Desk informar um total, o Linche Field mostra o total e calcula a próxima página.
+
+4. Segurança
+- Nenhuma API Key foi incluída nesta versão do pacote.
+- O arquivo backend/.env foi removido do pacote de distribuição.
+- Preserve o .env existente no ambiente de backend/Render.
+- Se quiser definir a URL do painel do MSP Desk, acrescente:
+
+MSPDESK_WEB_URL=https://api.mspdesk.com.br/login
+
+PRÓXIMO PASSO RECOMENDADO
+
+Depois de publicar esta versão, consultar os chamados e verificar:
+- se o número aparece corretamente;
+- se o clique abre o MSP Desk;
+- se a página 2 carrega corretamente;
+- se 50/100 registros funcionam;
+- qual é exatamente o payload real do relatório.
+
+Só depois disso devemos avançar para o mapeamento Ticket → Visita do Linche Field.

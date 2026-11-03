@@ -702,7 +702,7 @@ async function gerarPDF() {
     pdf.setFontSize(10);
 
     pdf.text(
-      "LINCHE INFORMATICA LTDA ME",
+      "LINCHE TECNOLOGIA E CONSULTORIA LTDA",
       92,
       12
     );
@@ -725,27 +725,34 @@ async function gerarPDF() {
     );
 
     pdf.text(
-      "R. Dr. Joaquim de Souza Campos Júnior, 74",
+      "Rua Jacareí, 28 - Parque Prado, Campinas - SP",
       92,
       22
     );
 
     pdf.text(
-      "CEP: 13070-718 Bonfim - Campinas/SP",
+      "CEP: 13043-090",
       92,
       27
     );
 
     pdf.text(
-      "Tel: (19) 3241-3200 | financeiro@lincheti.com.br",
+      "Tel: (19) 3241-3200",
       92,
       32
     );
 
+    pdf.text(
+      "suporte@lincheti.com.br | www.lincheti.com.br",
+      92,
+      37
+    );
+
+    // Identificação da RAT: quadro compacto no canto superior direito.
     pdf.rect(
-      165,
+      173,
       10,
-      32,
+      27,
       22
     );
 
@@ -753,11 +760,20 @@ async function gerarPDF() {
       "helvetica",
       "bold"
     );
-
+    pdf.setFontSize(8);
     pdf.text(
       "RAT Nº",
-      174,
-      17
+      186.5,
+      16,
+      { align: "center" }
+    );
+
+    pdf.setFontSize(7);
+    pdf.text(
+      "VERSÃO 1",
+      186.5,
+      20,
+      { align: "center" }
     );
 
     pdf.setTextColor(
@@ -770,10 +786,11 @@ async function gerarPDF() {
 
     pdf.text(
       rat,
-      166.5,
-      25,
+      186.5,
+      26,
       {
-        maxWidth: 29
+        maxWidth: 24,
+        align: "center"
       }
     );
 
@@ -1070,9 +1087,10 @@ async function gerarPDF() {
       55
     );
 
+    pdf.setFontSize(8);
     pdf.text(
-      "linche.ti     lincheti     linchetecnologia",
-      73,
+      "LINCHE FIELD • Desenvolvido por Jefferson Bruno de Bem",
+      67,
       285
     );
 

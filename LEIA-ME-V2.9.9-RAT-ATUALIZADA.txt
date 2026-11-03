@@ -1,0 +1,16 @@
+LINCHE FIELD v2.9.9 — ATUALIZAÇÃO DA RAT
+
+Alteração desta release:
+- Atualizado o cabeçalho do PDF da RAT para os dados cadastrais atuais da LINCHE.
+- Mantido o modelo operacional da RAT, assinatura, Firestore e vínculo com visitas.
+- Atualizado o gerador da RAT de detalhe e o gerador usado no preenchimento da RAT.
+- Alteração exclusiva do LINCHE FIELD; o FIELD SYSTEM não foi alterado.
+
+Dados da empresa:
+LINCHE TECNOLOGIA E CONSULTORIA LTDA
+CNPJ: 07.138.235/0001-93
+Rua Jacareí, 28 - Parque Prado, Campinas - SP
+CEP: 13043-090
+Tel: (19) 3241-3200
+Suporte@lincheti.com.br
+www.lincheti.com.br
