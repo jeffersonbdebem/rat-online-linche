@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { mspDeskStatus, testarMspDesk, listarTickets } from "../integrations/mspdesk/service.js";
+import { requireAdmin } from "../middleware/requireAdmin.js";
 
 const router = Router();
+
+// Todas as rotas da integração exigem token Firebase válido e cadastro admin ativo.
+router.use("/mspdesk", requireAdmin);
 
 router.get("/mspdesk/status", async (req, res) => {
   res.json(await mspDeskStatus());
