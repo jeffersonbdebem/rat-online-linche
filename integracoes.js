@@ -117,7 +117,7 @@ async function testarMsp() {
   setModalStatus("checking", "Testando integração", "Aguardando resposta do MSP Desk...");
 
   try {
-    const response = await fetch(`${API_BASE}/api/integrations/mspdesk/test`, {
+    const response = await apiFetch("/api/integrations/mspdesk/test", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       cache: "no-store"
