@@ -33,7 +33,7 @@ async function getFirebaseCerts() {
   if (!response.ok) throw new Error("Não foi possível obter certificados de validação Firebase.");
   const certs = await response.json();
   const cacheControl = response.headers.get("cache-control") || "";
-  const maxAge = Number(cacheControl.match(/max-age=(\\d+)/i)?.[1] || 300);
+  const maxAge = Number(cacheControl.match(/max-age=(\d+)/i)?.[1] || 300);
   certCache = { certs, expiresAt: Date.now() + maxAge * 1000 };
   return certs;
 }
@@ -114,7 +114,7 @@ async function usuarioAtivoAdmin(account, uid) {
 
 export async function requireAdmin(req, res, next) {
   const authorization = req.get("authorization") || "";
-  const match = authorization.match(/^Bearer\\s+(.+)$/i);
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
   if (!match) return res.status(401).json({ message: "Autenticação necessária." });
 
   let account;
