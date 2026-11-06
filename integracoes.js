@@ -8,6 +8,17 @@ if (String(sessao.user.email || "").toLowerCase() !== ADMIN_EMAIL) {
 
 const API_BASE = "https://rat-online-linche.onrender.com";
 
+async function apiFetch(path, options = {}) {
+  const token = await sessao.user.getIdToken();
+  const headers = new Headers(options.headers || {});
+  headers.set("Authorization", `Bearer ${token}`);
+  return fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers,
+    cache: "no-store"
+  });
+}
+
 const backendStatus = document.getElementById("backendStatus");
 const mspBadge = document.getElementById("mspBadge");
 const mspUltimaSync = document.getElementById("mspUltimaSync");
@@ -75,7 +86,7 @@ async function verificarBackend() {
 
 async function carregarStatusMsp() {
   try {
-    const response = await fetch(`${API_BASE}/api/integrations/mspdesk/test`, {
+    const response = await apiFetch("/api/integrations/mspdesk/test", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       cache: "no-store"
@@ -146,7 +157,7 @@ async function consultarMsp(page = 0) {
 
   try {
     const size = Math.min(100, Math.max(1, Number(mspPageSize?.value || 20)));
-    const response = await fetch(`${API_BASE}/api/integrations/mspdesk/tickets?page=${page}&size=${size}`, {
+    const response = await apiFetch(`/api/integrations/mspdesk/tickets?page=${page}&size=${size}`, {
       cache: "no-store"
     });
 
