@@ -5,7 +5,7 @@ const ADMIN_EMAIL = "jefferson.bem@lincheti.com.br";
 const PERFIS = new Set(["admin", "gestor", "analista"]);
 
 export async function exigirAcessoChamados(req, res, next) {
-  const token = String(req.headers.authorization || "").match(/^Bearer\\s+(.+)$/i)?.[1];
+  const token = String(req.headers.authorization || "").match(/^Bearer\s+(.+)$/i)?.[1];
   if (!token) return res.status(401).json({ ok: false, message: "Não autenticado." });
   try {
     const { auth, db } = firebaseAdmin();
