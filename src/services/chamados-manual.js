@@ -50,10 +50,9 @@ export async function abrirChamadoManual(dados, usuario, deps = {}) {
 export async function listarChamados({ status, limite = 200 } = {}, deps = {}) {
   const db = deps.db || dbPadrao();
   const max = Math.min(500, Math.max(1, Number(limite) || 200));
-  let q = db.collection("chamados");
-  if (status && STATUS.has(status)) q = q.where("status", "==", status);
-  const snap = await q.orderBy("ultimaMensagemEm", "desc").limit(max).get();
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const snap = await db.collection("chamados").orderBy("ultimaMensagemEm", "desc").limit(max).get();
+  const itens = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  return status && STATUS.has(status) ? itens.filter(c => c.status === status) : itens;
 }
 
 export async function atualizarChamadoManual(id, campos, usuario, deps = {}) {
@@ -63,7 +62,10 @@ export async function atualizarChamadoManual(id, campos, usuario, deps = {}) {
   if (!Object.keys(alteracoes).length) throw http(400, "Nenhuma alteração válida informada.");
   if (alteracoes.status && !STATUS.has(alteracoes.status)) throw http(400, "Status inválido.");
   if (alteracoes.prioridade && !PRIORIDADES.has(alteracoes.prioridade)) throw http(400, "Prioridade inválida.");
-  if (alteracoes.responsavelUid !== undefined && alteracoes.responsavelUid !== null && alteracoes.responsavelUid !== usuario.uid) throw http(403, "Só é permitido assumir o chamado para o próprio usuário ou liberá-lo.");
+  if (alteracoes.responsavelUid !== undefined) {
+    if (alteracoes.responsavelUid !== null && alteracoes.responsavelUid !== usuario.uid) throw http(403, "Só é permitido assumir o chamado para o próprio usuário ou liberá-lo.");
+    alteracoes.responsavelNome = alteracoes.responsavelUid ? usuario.nome : null;
+  }
   const ref = db.collection("chamados").doc(id);
   const agora = FieldValue.serverTimestamp();
   await db.runTransaction(async tx => {
