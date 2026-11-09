@@ -3,6 +3,7 @@ import { exigirAcessoChamados } from "../middleware/chamados-auth.js";
 import { abrirChamadoManual, listarChamados, atualizarChamadoManual, adicionarNotaManual } from "../services/chamados-manual.js";
 import { listarTarefasChamado, criarTarefaChamado, atualizarTarefaChamado } from "../services/tarefas-chamados.js";
 import { listarItensChamado, criarItemChamado, atualizarItemChamado } from "../services/itens-chamados.js";
+import { listarAnexosChamado, registrarAnexoChamado, obterUrlAnexoChamado } from "../services/anexos-chamados.js";
 
 const router = Router();
 const falha = (res, erro, padrao) => res.status(erro.status || 500).json({ ok: false, message: erro.message || padrao });
@@ -42,6 +43,18 @@ router.post("/:id/itens", exigirAcessoChamados, async (req, res) => {
 router.patch("/:id/itens/:itemId", exigirAcessoChamados, async (req, res) => {
   try { res.json(await atualizarItemChamado(req.params.id, req.params.itemId, req.body, req.usuario)); }
   catch (e) { falha(res, e, "Não foi possível atualizar o item."); }
+});
+router.get("/:id/anexos", exigirAcessoChamados, async (req, res) => {
+  try { res.json({ ok: true, anexos: await listarAnexosChamado(req.params.id) }); }
+  catch (e) { falha(res, e, "Não foi possível listar os anexos."); }
+});
+router.post("/:id/anexos", exigirAcessoChamados, async (req, res) => {
+  try { res.status(201).json(await registrarAnexoChamado(req.params.id, req.body, req.usuario)); }
+  catch (e) { falha(res, e, "Não foi possível registrar o anexo."); }
+});
+router.get("/:id/anexos/:anexoId/url", exigirAcessoChamados, async (req, res) => {
+  try { res.json(await obterUrlAnexoChamado(req.params.id, req.params.anexoId)); }
+  catch (e) { falha(res, e, "Não foi possível abrir o anexo."); }
 });
 router.post("/:id/notas", exigirAcessoChamados, async (req, res) => {
   try { res.status(201).json(await adicionarNotaManual(req.params.id, req.body?.texto, req.usuario)); }

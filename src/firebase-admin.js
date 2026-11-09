@@ -1,6 +1,7 @@
 import { initializeApp, cert, getApps } from "firebase-admin/app";
 import { getFirestore, FieldValue } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
+import { getStorage } from "firebase-admin/storage";
 
 export { FieldValue };
 
@@ -19,8 +20,12 @@ function credencial() {
 }
 
 export function firebaseAdmin() {
-  if (!getApps().length) initializeApp({ credential: cert(credencial()) });
-  return { db: getFirestore(), auth: getAuth() };
+  if (!getApps().length) {
+    const conta = credencial();
+    initializeApp({ credential: cert(conta), storageBucket: process.env.FIREBASE_STORAGE_BUCKET || `${conta.project_id}.firebasestorage.app` });
+  }
+  const app = getApps()[0];
+  return { db: getFirestore(app), auth: getAuth(app), bucket: getStorage(app).bucket() };
 }
 
 export function firebaseAdminConfigurado() {
