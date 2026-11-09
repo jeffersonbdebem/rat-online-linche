@@ -2,6 +2,7 @@ import { Router } from "express";
 import { exigirAcessoChamados } from "../middleware/chamados-auth.js";
 import { abrirChamadoManual, listarChamados, atualizarChamadoManual, adicionarNotaManual } from "../services/chamados-manual.js";
 import { listarTarefasChamado, criarTarefaChamado, atualizarTarefaChamado } from "../services/tarefas-chamados.js";
+import { listarItensChamado, criarItemChamado, atualizarItemChamado } from "../services/itens-chamados.js";
 
 const router = Router();
 const falha = (res, erro, padrao) => res.status(erro.status || 500).json({ ok: false, message: erro.message || padrao });
@@ -29,6 +30,18 @@ router.post("/:id/tarefas", exigirAcessoChamados, async (req, res) => {
 router.patch("/:id/tarefas/:tarefaId", exigirAcessoChamados, async (req, res) => {
   try { res.json(await atualizarTarefaChamado(req.params.id, req.params.tarefaId, req.body, req.usuario)); }
   catch (e) { falha(res, e, "Não foi possível atualizar a tarefa."); }
+});
+router.get("/:id/itens", exigirAcessoChamados, async (req, res) => {
+  try { res.json({ ok: true, itens: await listarItensChamado(req.params.id) }); }
+  catch (e) { falha(res, e, "Não foi possível listar os itens."); }
+});
+router.post("/:id/itens", exigirAcessoChamados, async (req, res) => {
+  try { res.status(201).json(await criarItemChamado(req.params.id, req.body, req.usuario)); }
+  catch (e) { falha(res, e, "Não foi possível adicionar o item."); }
+});
+router.patch("/:id/itens/:itemId", exigirAcessoChamados, async (req, res) => {
+  try { res.json(await atualizarItemChamado(req.params.id, req.params.itemId, req.body, req.usuario)); }
+  catch (e) { falha(res, e, "Não foi possível atualizar o item."); }
 });
 router.post("/:id/notas", exigirAcessoChamados, async (req, res) => {
   try { res.status(201).json(await adicionarNotaManual(req.params.id, req.body?.texto, req.usuario)); }
