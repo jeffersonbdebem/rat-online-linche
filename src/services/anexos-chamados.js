@@ -27,7 +27,7 @@ export async function listarAnexosChamado(chamadoId, deps = {}) {
   const chamado = await ref.get();
   if (!chamado.exists) throw http(404, "Chamado não encontrado.");
   const snap = await ref.collection("anexos").orderBy("criadoEm", "desc").get();
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  return snap.docs.map(d => { const data = d.data(); return { id: d.id, ...data, criadoEm: data.criadoEm?.toDate?.().toISOString?.() || null }; });
 }
 export async function registrarAnexoChamado(chamadoId, dados, usuario, deps = {}) {
   const db = deps.db || dbPadrao();
