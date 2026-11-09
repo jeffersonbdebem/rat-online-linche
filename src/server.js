@@ -3,9 +3,9 @@ import express from "express";
 import cors from "cors";
 import integrationsRouter from "./routes/integrations.js";
 import chamadosRouter from "./routes/chamados.js";
-import { firebaseAdminConfigurado } from "./firebase-admin.js";
+import { firebaseAdmin, firebaseAdminConfigurado } from "./firebase-admin.js";
 
-const VERSION = "3.1.0";
+const VERSION = "3.1.1";
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
 const allowed = [
@@ -32,6 +32,32 @@ app.get("/api/health", (req, res) => res.json({
   whatsapp: { enabled: false, message: "Canal WhatsApp fora do escopo desta versão." },
   timestamp: new Date().toISOString()
 }));
+
+// Teste somente de leitura: confirma que a credencial consegue acessar o Firestore.
+app.get("/api/health/firestore", async (req, res) => {
+  try {
+    if (!firebaseAdminConfigurado()) {
+      return res.status(503).json({ ok: false, firestore: "not_configured" });
+    }
+    const { db } = firebaseAdmin();
+    const snapshot = await db.doc("_healthchecks/connection").get();
+    return res.json({
+      ok: true,
+      firestore: "connected",
+      readTest: "passed",
+      healthDocumentExists: snapshot.exists,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error("[firestore-health] falha na leitura:", error.code || error.name || "unknown");
+    return res.status(503).json({
+      ok: false,
+      firestore: "error",
+      code: error.code || "FIRESTORE_CONNECTION_FAILED",
+      message: "Não foi possível acessar o Firestore. Verifique a credencial, o projeto e as permissões."
+    });
+  }
+});
 
 app.use("/api/integrations", integrationsRouter);
 app.use("/api/chamados", chamadosRouter);
