@@ -5,7 +5,7 @@ import integrationsRouter from "./routes/integrations.js";
 import chamadosRouter from "./routes/chamados.js";
 import { firebaseAdmin, firebaseAdminConfigurado } from "./firebase-admin.js";
 
-const VERSION = "3.4.0";
+const VERSION = "3.5.0";
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
 const allowed = [
