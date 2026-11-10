@@ -41,7 +41,7 @@ async function garantirBucket(client) {
   }
 }
 function validarNome(nome) {
-  const limpo = String(nome || "").replace(/[\\/\\r\\n\\0]/g, "_").trim();
+  const limpo = String(nome || "").replace(/[\/\\\r\n\0]/g, "_").trim();
   if (!limpo || limpo.length > 180) throw http(400, "Nome de arquivo inválido.");
   return limpo;
 }
