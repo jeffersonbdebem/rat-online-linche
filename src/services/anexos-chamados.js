@@ -18,8 +18,8 @@ function dbPadrao() { return firebaseAdmin().db; }
 let clienteSupabase;
 function supabase() {
   const url = process.env.SUPABASE_URL;
-  const chave = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !chave) throw http(503, "Armazenamento de anexos não configurado no servidor. Configure SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY no Render.");
+  const chave = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !chave) throw http(503, "Armazenamento de anexos não configurado no servidor. Configure SUPABASE_URL e SUPABASE_SECRET_KEY no Render.");
   if (!clienteSupabase) clienteSupabase = createClient(url, chave, {
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
   });
