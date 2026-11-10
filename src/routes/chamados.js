@@ -1,4 +1,5 @@
 import { Router } from "express";
+import multer from "multer";
 import { exigirAcessoChamados } from "../middleware/chamados-auth.js";
 import { abrirChamadoManual, listarChamados, atualizarChamadoManual, adicionarNotaManual } from "../services/chamados-manual.js";
 import { listarTarefasChamado, criarTarefaChamado, atualizarTarefaChamado } from "../services/tarefas-chamados.js";
@@ -6,6 +7,20 @@ import { listarItensChamado, criarItemChamado, atualizarItemChamado } from "../s
 import { listarAnexosChamado, registrarAnexoChamado, obterUrlAnexoChamado } from "../services/anexos-chamados.js";
 
 const router = Router();
+const MAX_ANEXO = 15 * 1024 * 1024;
+const TIPOS_ANEXO = new Set(["image/jpeg","image/png","image/webp","image/heic","application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","text/plain"]);
+const uploadAnexo = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: MAX_ANEXO, files: 1 },
+  fileFilter: (_req, file, cb) => cb(TIPOS_ANEXO.has(file.mimetype) ? null : Object.assign(new Error("Tipo de arquivo não permitido."), { status: 400 }), TIPOS_ANEXO.has(file.mimetype))
+});
+function receberAnexo(req, res, next) {
+  uploadAnexo.single("arquivo")(req, res, erro => {
+    if (!erro) return next();
+    const status = erro.code === "LIMIT_FILE_SIZE" ? 413 : erro.status || 400;
+    return res.status(status).json({ ok: false, message: erro.code === "LIMIT_FILE_SIZE" ? "O arquivo deve ter até 15 MB." : erro.message || "Não foi possível receber o arquivo." });
+  });
+}
 const falha = (res, erro, padrao) => res.status(erro.status || 500).json({ ok: false, message: erro.message || padrao });
 
 router.get("/", exigirAcessoChamados, async (req, res) => {
@@ -48,8 +63,8 @@ router.get("/:id/anexos", exigirAcessoChamados, async (req, res) => {
   try { res.json({ ok: true, anexos: await listarAnexosChamado(req.params.id) }); }
   catch (e) { falha(res, e, "Não foi possível listar os anexos."); }
 });
-router.post("/:id/anexos", exigirAcessoChamados, async (req, res) => {
-  try { res.status(201).json(await registrarAnexoChamado(req.params.id, req.body, req.usuario)); }
+router.post("/:id/anexos", exigirAcessoChamados, receberAnexo, async (req, res) => {
+  try { res.status(201).json(await registrarAnexoChamado(req.params.id, req.file, req.body?.categoria, req.usuario)); }
   catch (e) { falha(res, e, "Não foi possível registrar o anexo."); }
 });
 router.get("/:id/anexos/:anexoId/url", exigirAcessoChamados, async (req, res) => {
