@@ -80,7 +80,7 @@ function editar(id) {
   document.getElementById("tituloFormEquipamento").textContent="Editar Equipamento";
   const clienteAtual=clientes.find(c=>c.id===e.clienteId);
   if(clienteAtual && ![...selectCliente.options].some(o=>o.value===clienteAtual.id)){
-    selectCliente.insertAdjacentHTML("beforeend",`<option value="${esc(clienteAtual.id)}">${esc(clienteAtual.nome)} (inativo)</option>`);
+    selectCliente.insertAdjacentHTML("beforeend",`<option data-temporaria="true" value="${esc(clienteAtual.id)}">${esc(clienteAtual.nome)} (inativo)</option>`);
   }
   set("equipamentoId",e.id);set("clienteId",e.clienteId);set("nomeEquipamento",e.nome);
   set("tipo",e.tipo);set("fabricante",e.fabricante);set("modelo",e.modelo);
