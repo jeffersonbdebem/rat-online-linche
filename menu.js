@@ -81,6 +81,12 @@ if (sessao) {
         perfis: ["admin","gestor","analista","consulta"]
       },
       {
+        nome: "Equipamentos",
+        arquivo: "equipamentos.html",
+        icone: "▣",
+        perfis: ["admin","gestor","analista","consulta"]
+      },
+      {
         nome: "Relatórios",
         arquivo: "relatorios.html",
         icone: "▥",

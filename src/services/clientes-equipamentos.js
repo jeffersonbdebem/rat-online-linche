@@ -70,6 +70,40 @@ export async function atualizarCliente(id, dados, usuario, deps = {}) {
   await ref.update({ ...cliente, atualizadoEm:FieldValue.serverTimestamp(), atualizadoPorUid:usuario.uid });
   return { ok:true };
 }
+export async function removerCliente(id, usuario, deps = {}) {
+  const db = deps.db || dbPadrao();
+  const ref = db.collection("clientes").doc(id);
+  const snap = await ref.get();
+  if (!snap.exists) throw http(404, "Cliente não encontrado.");
+  if (snap.data().ativo === false) return { ok:true, jaInativo:true, equipamentosInativados:0 };
+
+  const equipamentos = await db.collection("equipamentos").where("clienteId", "==", id).get();
+  let totalInativados = 0;
+  for (let i = 0; i < equipamentos.docs.length; i += 450) {
+    const lote = db.batch();
+    equipamentos.docs.slice(i, i + 450).forEach(docSnap => {
+      if (docSnap.data().ativo !== false) {
+        lote.update(docSnap.ref, {
+          ativo:false,
+          atualizadoEm:FieldValue.serverTimestamp(),
+          atualizadoPorUid:usuario.uid
+        });
+        totalInativados++;
+      }
+    });
+    await lote.commit();
+  }
+  await ref.update({
+    ativo:false,
+    atualizadoEm:FieldValue.serverTimestamp(),
+    atualizadoPorUid:usuario.uid,
+    removidoEm:FieldValue.serverTimestamp(),
+    removidoPorUid:usuario.uid,
+    removidoPorNome:usuario.nome
+  });
+  return { ok:true, equipamentosInativados:totalInativados };
+}
+
 export async function listarEquipamentos({ clienteId, busca, limite: qtd } = {}, deps = {}) {
   const db = deps.db || dbPadrao();
   let query = db.collection("equipamentos");
@@ -97,9 +131,18 @@ export async function criarEquipamento(dados, usuario, deps = {}) {
 export async function atualizarEquipamento(id, dados, usuario, deps = {}) {
   const db = deps.db || dbPadrao(), ref = db.collection("equipamentos").doc(id), snap = await ref.get();
   if (!snap.exists) throw http(404, "Equipamento não encontrado.");
-  const equipamento = dadosEquipamento(dados || {}, snap.data());
-  const cliente = await clienteExiste(db, equipamento.clienteId);
-  await ref.update({ ...equipamento, clienteNome:cliente.nome, atualizadoEm:FieldValue.serverTimestamp(), atualizadoPorUid:usuario.uid });
+  const atual = snap.data();
+  const equipamento = dadosEquipamento(dados || {}, atual);
+  let clienteNome = atual.clienteNome || "";
+  const clienteMudou = equipamento.clienteId !== atual.clienteId;
+  if (clienteMudou || equipamento.ativo !== false) {
+    const cliente = await clienteExiste(db, equipamento.clienteId);
+    clienteNome = cliente.nome;
+  } else if (!clienteNome) {
+    const clienteSnap = await db.collection("clientes").doc(equipamento.clienteId).get();
+    if (clienteSnap.exists) clienteNome = clienteSnap.data().nome || "";
+  }
+  await ref.update({ ...equipamento, clienteNome, atualizadoEm:FieldValue.serverTimestamp(), atualizadoPorUid:usuario.uid });
   return { ok:true };
 }
 export async function listarChamadosEquipamento(id, deps = {}) {

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipamentos - Linche Field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css?v=2.7.0">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar"></aside>
+<main class="main">
+<header class="topbar">
+<div><h1>Equipamentos</h1><p>Cadastre equipamentos, vincule a clientes e consulte o histórico de chamados.</p></div>
+<div class="rat-box"><small>Total</small><strong id="totalEquipamentos">0</strong></div>
+</header>
+<section class="card">
+<h2 id="tituloFormEquipamento">Cadastrar Equipamento</h2>
+<form id="equipamentoForm">
+<input type="hidden" id="equipamentoId">
+<div class="grid two">
+<label>Cliente vinculado<select id="clienteId" required><option value="">Carregando clientes...</option></select></label>
+<label>Nome do equipamento<input id="nomeEquipamento" required maxlength="160" placeholder="Ex.: Servidor principal"></label>
+</div>
+<div class="grid three">
+<label>Tipo<input id="tipo" maxlength="100" placeholder="Ex.: Servidor, notebook, impressora"></label>
+<label>Fabricante<input id="fabricante" maxlength="100"></label>
+<label>Modelo<input id="modelo" maxlength="120"></label>
+</div>
+<div class="grid three">
+<label>Número de série<input id="numeroSerie" maxlength="120"></label>
+<label>Patrimônio<input id="patrimonio" maxlength="80"></label>
+<label>Localização<input id="localizacao" maxlength="160" placeholder="Ex.: Sala de TI, filial"></label>
+</div>
+<div class="grid two">
+<label>Status<select id="ativoEquipamento"><option value="true">Ativo</option><option value="false">Inativo</option></select></label>
+<label>Observações<input id="observacoesEquipamento" maxlength="2000"></label>
+</div>
+<div class="actions">
+<button type="button" class="secondary" id="cancelarEquipamento">Cancelar edição</button>
+<button type="submit" class="primary">Salvar equipamento</button>
+</div>
+</form>
+</section>
+<section class="card">
+<h2>Lista de Equipamentos</h2>
+<div class="grid two">
+<label>Pesquisar<input id="buscaEquipamento" placeholder="Nome, tipo, fabricante, modelo, série ou patrimônio"></label>
+<label>Cliente<select id="filtroCliente"><option value="">Todos os clientes</option></select></label>
+</div>
+<div class="table-wrapper">
+<table class="tabela">
+<thead><tr><th>Equipamento</th><th>Cliente</th><th>Tipo / Modelo</th><th>Nº Série</th><th>Patrimônio</th><th>Status</th><th>Ações</th></tr></thead>
+<tbody id="equipamentosTabela"><tr><td colspan="7">Carregando equipamentos...</td></tr></tbody>
+</table>
+</div>
+</section>
+<section class="card" id="painelHistorico" hidden>
+<div class="topbar"><div><h2 id="tituloHistorico">Histórico de chamados</h2><p id="subtituloHistorico"></p></div><button type="button" class="secondary" id="fecharHistorico">Fechar histórico</button></div>
+<div class="table-wrapper"><table class="tabela">
+<thead><tr><th>Protocolo</th><th>Assunto</th><th>Status</th><th>Prioridade</th><th>Abertura</th></tr></thead>
+<tbody id="historicoTabela"><tr><td colspan="5">Selecione um equipamento.</td></tr></tbody>
+</table></div>
+</section>
+</main>
+</div>
+<script type="module" src="equipamentos.js?v=1.0.0"></script>
+<script type="module" src="menu.js?v=2.8.0"></script>
+</body>
+</html>
