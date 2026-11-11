@@ -131,9 +131,18 @@ export async function criarEquipamento(dados, usuario, deps = {}) {
 export async function atualizarEquipamento(id, dados, usuario, deps = {}) {
   const db = deps.db || dbPadrao(), ref = db.collection("equipamentos").doc(id), snap = await ref.get();
   if (!snap.exists) throw http(404, "Equipamento não encontrado.");
-  const equipamento = dadosEquipamento(dados || {}, snap.data());
-  const cliente = await clienteExiste(db, equipamento.clienteId);
-  await ref.update({ ...equipamento, clienteNome:cliente.nome, atualizadoEm:FieldValue.serverTimestamp(), atualizadoPorUid:usuario.uid });
+  const atual = snap.data();
+  const equipamento = dadosEquipamento(dados || {}, atual);
+  let clienteNome = atual.clienteNome || "";
+  const clienteMudou = equipamento.clienteId !== atual.clienteId;
+  if (clienteMudou || equipamento.ativo !== false) {
+    const cliente = await clienteExiste(db, equipamento.clienteId);
+    clienteNome = cliente.nome;
+  } else if (!clienteNome) {
+    const clienteSnap = await db.collection("clientes").doc(equipamento.clienteId).get();
+    if (clienteSnap.exists) clienteNome = clienteSnap.data().nome || "";
+  }
+  await ref.update({ ...equipamento, clienteNome, atualizadoEm:FieldValue.serverTimestamp(), atualizadoPorUid:usuario.uid });
   return { ok:true };
 }
 export async function listarChamadosEquipamento(id, deps = {}) {
