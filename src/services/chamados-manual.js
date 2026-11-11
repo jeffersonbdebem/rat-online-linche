@@ -112,7 +112,16 @@ export async function atualizarChamadoManual(id, campos, usuario, deps = {}) {
   return { ok: true };
 }
 
-export async function listarMensagensChamado(id, deps = {}) {\n  const db = deps.db || dbPadrao();\n  const ref = db.collection("chamados").doc(id);\n  const snapChamado = await ref.get();\n  if (!snapChamado.exists) throw http(404, "Chamado não encontrado.");\n  const snap = await ref.collection("mensagens").orderBy("criadoEm", "asc").limit(500).get();\n  return snap.docs.map(d => ({ id: d.id, ...d.data() }));\n}\n\nexport async function adicionarNotaManual(id, texto, usuario, deps = {}) {
+export async function listarMensagensChamado(id, deps = {}) {
+  const db = deps.db || dbPadrao();
+  const ref = db.collection("chamados").doc(id);
+  const snapChamado = await ref.get();
+  if (!snapChamado.exists) throw http(404, "Chamado não encontrado.");
+  const snap = await ref.collection("mensagens").orderBy("criadoEm", "asc").limit(500).get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function adicionarNotaManual(id, texto, usuario, deps = {}) {
   const nota = String(texto || "").trim();
   if (!nota) throw http(400, "Digite uma nota.");
   if (nota.length > 4000) throw http(400, "Nota muito longa (máximo 4000 caracteres).");
