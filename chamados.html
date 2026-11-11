@@ -39,7 +39,7 @@
 <div class="modal hidden" id="modalNovoChamado" aria-hidden="true"><div class="modal-backdrop" data-close></div><div class="modal-card ticket-modal">
 <div class="modal-head"><div><p class="eyebrow">ABERTURA MANUAL</p><h2>Novo chamado</h2><p>Registre uma solicitação sem depender de WhatsApp ou de uma visita.</p></div><button class="modal-close" type="button" data-close>×</button></div>
 <form id="formChamado"><div class="ticket-form-grid">
-<label>Cliente<select id="novoCliente"><option value="">Selecione um cliente (opcional)</option></select></label>
+<label>Cliente *<select id="novoCliente" required><option value="">Selecione um cliente</option></select></label>
 <label>Equipamento<select id="novoEquipamento" disabled><option value="">Selecione o cliente primeiro</option></select></label>
 <label class="span-2">Assunto *<input id="novoAssunto" maxlength="160" required placeholder="Ex.: Computador não inicia"></label>
 <label>Prioridade<select id="novaPrioridade"><option value="normal">Normal</option><option value="baixa">Baixa</option><option value="alta">Alta</option><option value="urgente">Urgente</option></select></label>
