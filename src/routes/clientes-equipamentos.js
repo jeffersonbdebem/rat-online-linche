@@ -3,7 +3,7 @@ import { exigirAcessoChamados } from "../middleware/chamados-auth.js";
 import {
   listarClientes, obterCliente, criarCliente, atualizarCliente,
   listarEquipamentos, obterEquipamento, criarEquipamento, atualizarEquipamento,
-  listarChamadosEquipamento
+  listarChamadosEquipamento, removerCliente
 } from "../services/clientes-equipamentos.js";
 
 const router = Router();
@@ -17,6 +17,10 @@ router.get("/clientes", async (req,res) => {
 router.post("/clientes", async (req,res) => {
   try { res.status(201).json(await criarCliente(req.body,req.usuario)); }
   catch(e) { falha(res,e,"Não foi possível cadastrar o cliente."); }
+});
+router.delete("/clientes/:id", async (req,res) => {
+  try { res.json(await removerCliente(req.params.id,req.usuario)); }
+  catch(e) { falha(res,e,"Não foi possível retirar o cliente."); }
 });
 router.get("/clientes/:id", async (req,res) => {
   try { res.json({ ok:true, cliente:await obterCliente(req.params.id) }); }
