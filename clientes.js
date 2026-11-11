@@ -55,8 +55,26 @@ function render() {
   tabela.innerHTML = lista.map(c => `<tr>
     <td><strong>${esc(c.nome)}</strong></td><td>${esc(c.documento)}</td><td>${esc(c.cidade)}</td>
     <td>${esc(c.contato)}</td><td>${esc(c.telefone)}</td><td>${c.ativo===false?"Inativo":"Ativo"}</td>
-    <td>${podeEditar ? `<button class="secondary small" data-edit="${esc(c.id)}">Editar</button>` : "Consulta"}</td></tr>`).join("");
+    <td><div class="table-actions">${podeEditar ? `<button class="secondary small" data-edit="${esc(c.id)}">Editar</button><button class="danger small" data-remove="${esc(c.id)}">Excluir</button>` : "Consulta"}</div></td></tr>`).join("");
   tabela.querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click",()=>editar(b.dataset.edit)));
+  tabela.querySelectorAll("[data-remove]").forEach(b => b.addEventListener("click",()=>excluirCliente(b.dataset.remove)));
+}
+async function excluirCliente(id) {
+  const cliente = clientes.find(c => c.id === id);
+  if (!cliente) return;
+  const confirmado = confirm(
+    `Confirma a retirada do cliente "${cliente.nome}"?\\n\\nO cliente será marcado como inativo e seus equipamentos vinculados também serão inativados. O histórico de chamados será preservado.`
+  );
+  if (!confirmado) return;
+  try {
+    const resultado = await api("/clientes/" + encodeURIComponent(id), { method:"DELETE" });
+    if (val("clienteId") === id) limpar();
+    alert(`Cliente retirado com sucesso. Equipamentos inativados: ${resultado.equipamentosInativados ?? 0}.`);
+    await carregar();
+  } catch (erro) {
+    console.error("Erro ao retirar cliente:", erro);
+    alert("Não foi possível retirar o cliente: " + erro.message);
+  }
 }
 function editar(id) {
   const c=clientes.find(x=>x.id===id); if(!c)return;
