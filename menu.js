@@ -75,6 +75,12 @@ if (sessao) {
         perfis: ["admin","gestor","analista","consulta"]
       },
       {
+        nome: "Chamados",
+        arquivo: "chamados.html",
+        icone: "▤",
+        perfis: ["admin","gestor","analista"]
+      },
+      {
         nome: "Clientes",
         arquivo: "clientes.html",
         icone: "◇",
