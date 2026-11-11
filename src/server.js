@@ -3,9 +3,10 @@ import express from "express";
 import cors from "cors";
 import integrationsRouter from "./routes/integrations.js";
 import chamadosRouter from "./routes/chamados.js";
+import clientesEquipamentosRouter from "./routes/clientes-equipamentos.js";
 import { firebaseAdmin, firebaseAdminConfigurado } from "./firebase-admin.js";
 
-const VERSION = "3.5.0";
+const VERSION = "3.6.0";
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
 const allowed = [
@@ -61,6 +62,7 @@ app.get("/api/health/firestore", async (req, res) => {
 
 app.use("/api/integrations", integrationsRouter);
 app.use("/api/chamados", chamadosRouter);
+app.use("/api", clientesEquipamentosRouter);
 app.use((error, req, res, next) => {
   console.error("[api] erro não tratado:", error);
   res.status(error.message?.includes("CORS") ? 403 : 500).json({ ok: false, message: error.message || "Erro interno." });
