@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 import { exigirAcessoChamados } from "../middleware/chamados-auth.js";
-import { abrirChamadoManual, listarChamados, atualizarChamadoManual, adicionarNotaManual } from "../services/chamados-manual.js";
+import { abrirChamadoManual, listarChamados, atualizarChamadoManual, adicionarNotaManual, listarMensagensChamado } from "../services/chamados-manual.js";
 import { listarTarefasChamado, criarTarefaChamado, atualizarTarefaChamado } from "../services/tarefas-chamados.js";
 import { listarItensChamado, criarItemChamado, atualizarItemChamado } from "../services/itens-chamados.js";
 import { listarAnexosChamado, registrarAnexoChamado, obterUrlAnexoChamado } from "../services/anexos-chamados.js";
@@ -71,7 +71,7 @@ router.get("/:id/anexos/:anexoId/url", exigirAcessoChamados, async (req, res) =>
   try { res.json(await obterUrlAnexoChamado(req.params.id, req.params.anexoId)); }
   catch (e) { falha(res, e, "Não foi possível abrir o anexo."); }
 });
-router.post("/:id/notas", exigirAcessoChamados, async (req, res) => {
+router.get("/:id/mensagens", exigirAcessoChamados, async (req, res) => {\n  try { res.json({ ok: true, mensagens: await listarMensagensChamado(req.params.id) }); }\n  catch (e) { falha(res, e, "Não foi possível consultar a linha do tempo."); }\n});\nrouter.post("/:id/notas", exigirAcessoChamados, async (req, res) => {
   try { res.status(201).json(await adicionarNotaManual(req.params.id, req.body?.texto, req.usuario)); }
   catch (e) { falha(res, e, "Não foi possível salvar a nota."); }
 });
