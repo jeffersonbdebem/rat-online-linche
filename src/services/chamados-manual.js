@@ -7,10 +7,34 @@ function dbPadrao() { return firebaseAdmin().db; }
 
 export async function abrirChamadoManual(dados, usuario, deps = {}) {
   const db = deps.db || dbPadrao();
-  const clienteNome = String(dados?.clienteNome || "").trim();
+  let clienteId = String(dados?.clienteId || "").trim() || null;
+  const equipamentoId = String(dados?.equipamentoId || "").trim() || null;
+  let equipamentoNome = "";
+  let clienteCadastro = null;
+  if (clienteId) {
+    const clienteSnap = await db.collection("clientes").doc(clienteId).get();
+    if (!clienteSnap.exists) throw http(404, "Cliente selecionado não encontrado.");
+    clienteCadastro = clienteSnap.data();
+    if (clienteCadastro.ativo === false) throw http(409, "O cliente selecionado está inativo.");
+  }
+  if (equipamentoId) {
+    const equipamentoSnap = await db.collection("equipamentos").doc(equipamentoId).get();
+    if (!equipamentoSnap.exists) throw http(404, "Equipamento selecionado não encontrado.");
+    const equipamento = equipamentoSnap.data();
+    if (equipamento.ativo === false) throw http(409, "O equipamento selecionado está inativo.");
+    if (clienteId && equipamento.clienteId !== clienteId) throw http(400, "O equipamento não pertence ao cliente selecionado.");
+    clienteId = equipamento.clienteId;
+    equipamentoNome = equipamento.nome || equipamento.modelo || "";
+    if (!clienteCadastro) {
+      const clienteSnap = await db.collection("clientes").doc(clienteId).get();
+      if (!clienteSnap.exists || clienteSnap.data().ativo === false) throw http(409, "O cliente vinculado ao equipamento não está disponível.");
+      clienteCadastro = clienteSnap.data();
+    }
+  }
+  const clienteNome = String(clienteCadastro?.nome || dados?.clienteNome || "").trim();
   const assunto = String(dados?.assunto || "").trim();
-  const telefone = String(dados?.telefone || "").trim();
-  const email = String(dados?.email || "").trim();
+  const telefone = String(dados?.telefone || clienteCadastro?.telefone || "").trim();
+  const email = String(dados?.email || clienteCadastro?.email || "").trim();
   const descricao = String(dados?.descricao || "").trim();
   const prioridade = String(dados?.prioridade || "normal");
   if (!clienteNome) throw http(400, "Informe o nome do cliente ou solicitante.");
@@ -27,7 +51,7 @@ export async function abrirChamadoManual(dados, usuario, deps = {}) {
     const codigo = `CH-${String(numero).padStart(6, "0")}`;
     tx.set(contadorRef, { ultimo: numero }, { merge: true });
     tx.create(chamadoRef, {
-      numero, protocolo: codigo, clienteNome, assunto, telefone, email, descricao,
+      numero, protocolo: codigo, clienteId, clienteNome, equipamentoId, equipamentoNome, assunto, telefone, email, descricao,
       origem: "manual", provedor: null, status: "novo", prioridade,
       responsavelUid: null, responsavelNome: null, naoLidas: 0,
       ultimaMensagemEm: agora, ultimaMensagemTexto: descricao || assunto,
