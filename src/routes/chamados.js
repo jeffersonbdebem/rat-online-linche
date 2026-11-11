@@ -71,7 +71,11 @@ router.get("/:id/anexos/:anexoId/url", exigirAcessoChamados, async (req, res) =>
   try { res.json(await obterUrlAnexoChamado(req.params.id, req.params.anexoId)); }
   catch (e) { falha(res, e, "Não foi possível abrir o anexo."); }
 });
-router.get("/:id/mensagens", exigirAcessoChamados, async (req, res) => {\n  try { res.json({ ok: true, mensagens: await listarMensagensChamado(req.params.id) }); }\n  catch (e) { falha(res, e, "Não foi possível consultar a linha do tempo."); }\n});\nrouter.post("/:id/notas", exigirAcessoChamados, async (req, res) => {
+router.get("/:id/mensagens", exigirAcessoChamados, async (req, res) => {
+  try { res.json({ ok: true, mensagens: await listarMensagensChamado(req.params.id) }); }
+  catch (e) { falha(res, e, "Não foi possível consultar a linha do tempo."); }
+});
+router.post("/:id/notas", exigirAcessoChamados, async (req, res) => {
   try { res.status(201).json(await adicionarNotaManual(req.params.id, req.body?.texto, req.usuario)); }
   catch (e) { falha(res, e, "Não foi possível salvar a nota."); }
 });
