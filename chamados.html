@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chamados - Linche Field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css?v=2.7.0">
+<link rel="stylesheet" href="chamados.css?v=1.0.0">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar"></aside>
+<main class="main">
+<header class="topbar">
+<div><p class="eyebrow">ATENDIMENTO INDEPENDENTE</p><h1>Chamados</h1><p>Abertura manual, acompanhamento técnico e histórico em um fluxo separado das visitas e RATs.</p></div>
+<div class="ticket-header-actions"><button class="secondary" id="btnAtualizar" type="button">↻ Atualizar</button><button class="primary" id="btnNovoChamado" type="button">＋ Novo chamado</button></div>
+</header>
+<section class="ticket-stats">
+<article class="card ticket-stat"><small>Total exibido</small><strong id="totalChamados">0</strong></article>
+<article class="card ticket-stat"><small>Novos</small><strong id="totalNovos">0</strong></article>
+<article class="card ticket-stat"><small>Em atendimento</small><strong id="totalAtendimento">0</strong></article>
+<article class="card ticket-stat"><small>Aguardando cliente</small><strong id="totalAguardando">0</strong></article>
+<article class="card ticket-stat"><small>Encerrados</small><strong id="totalEncerrados">0</strong></article>
+</section>
+<section class="card ticket-toolbar">
+<label>Pesquisar<input id="buscaChamado" type="search" placeholder="Protocolo, cliente, assunto ou responsável"></label>
+<label>Status<select id="filtroStatus"><option value="">Todos os status</option><option value="novo">Novo</option><option value="em_atendimento">Em atendimento</option><option value="aguardando_cliente">Aguardando cliente</option><option value="encerrado">Encerrado</option></select></label>
+<label>Prioridade<select id="filtroPrioridade"><option value="">Todas</option><option value="urgente">Urgente</option><option value="alta">Alta</option><option value="normal">Normal</option><option value="baixa">Baixa</option></select></label>
+</section>
+<section class="card">
+<div class="ticket-list-heading"><div><h2>Fila de atendimento</h2><p>Chamados independentes do fluxo de visitas técnicas.</p></div><span id="atualizadoEm"></span></div>
+<div class="table-wrapper"><table class="tabela ticket-table"><thead><tr><th>Protocolo</th><th>Cliente / Equipamento</th><th>Assunto</th><th>Prioridade</th><th>Status</th><th>Responsável</th><th>Abertura</th><th>Ações</th></tr></thead><tbody id="chamadosTabela"><tr><td colspan="8">Carregando chamados...</td></tr></tbody></table></div>
+</section>
+</main>
+</div>
+<div class="modal hidden" id="modalNovoChamado" aria-hidden="true"><div class="modal-backdrop" data-close></div><div class="modal-card ticket-modal">
+<div class="modal-head"><div><p class="eyebrow">ABERTURA MANUAL</p><h2>Novo chamado</h2><p>Registre uma solicitação sem depender de WhatsApp ou de uma visita.</p></div><button class="modal-close" type="button" data-close>×</button></div>
+<form id="formChamado"><div class="ticket-form-grid">
+<label>Cliente<select id="novoCliente"><option value="">Selecione um cliente (opcional)</option></select></label>
+<label>Equipamento<select id="novoEquipamento" disabled><option value="">Selecione o cliente primeiro</option></select></label>
+<label class="span-2">Assunto *<input id="novoAssunto" maxlength="160" required placeholder="Ex.: Computador não inicia"></label>
+<label>Prioridade<select id="novaPrioridade"><option value="normal">Normal</option><option value="baixa">Baixa</option><option value="alta">Alta</option><option value="urgente">Urgente</option></select></label>
+<label>Telefone<input id="novoTelefone" maxlength="40" placeholder="Telefone para contato"></label>
+<label class="span-2">E-mail<input id="novoEmail" type="email" maxlength="160" placeholder="E-mail do solicitante"></label>
+<label class="span-2">Descrição<textarea id="novaDescricao" rows="4" maxlength="4000" placeholder="Descreva o problema, contexto e informações importantes"></textarea></label>
+</div><div class="modal-actions"><button class="secondary" type="button" data-close>Cancelar</button><button class="primary" type="submit" id="btnSalvarChamado">Abrir chamado</button></div></form>
+</div></div>
+<div class="modal hidden" id="modalDetalheChamado" aria-hidden="true"><div class="modal-backdrop" data-close></div><div class="modal-card ticket-detail-modal">
+<div class="modal-head"><div><p class="eyebrow">ACOMPANHAMENTO</p><h2 id="detalheTitulo">Chamado</h2><p id="detalheSubtitulo"></p></div><button class="modal-close" type="button" data-close>×</button></div>
+<div id="detalheConteudo"></div>
+</div></div>
+<div id="toast" class="toast"></div>
+<script type="module" src="chamados.js?v=1.0.0"></script>
+<script type="module" src="menu.js?v=2.9.0"></script>
+</body></html>
