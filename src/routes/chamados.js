@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { exigirAcessoChamados } from "../middleware/chamados-auth.js";
+import { exigirAcessoChamados, exigirLeituraRelatoriosChamados } from "../middleware/chamados-auth.js";
 import { abrirChamadoManual, listarChamados, atualizarChamadoManual, adicionarNotaManual, listarMensagensChamado } from "../services/chamados-manual.js";
 import { listarTarefasChamado, criarTarefaChamado, atualizarTarefaChamado } from "../services/tarefas-chamados.js";
 import { listarItensChamado, criarItemChamado, atualizarItemChamado } from "../services/itens-chamados.js";
@@ -23,7 +23,7 @@ function receberAnexo(req, res, next) {
 }
 const falha = (res, erro, padrao) => res.status(erro.status || 500).json({ ok: false, message: erro.message || padrao });
 
-router.get("/", exigirAcessoChamados, async (req, res) => {
+router.get("/", exigirLeituraRelatoriosChamados, async (req, res) => {
   try { res.json({ ok: true, chamados: await listarChamados({ status: req.query.status, limite: req.query.limite }) }); }
   catch (e) { falha(res, e, "Não foi possível listar os chamados."); }
 });
