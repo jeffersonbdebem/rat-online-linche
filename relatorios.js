@@ -38,7 +38,11 @@ const clientesResumo = document.getElementById("clientesResumo");
 const tecnicosResumo = document.getElementById("tecnicosResumo");
 const tabelaRats = document.getElementById("tabelaRats");
 
-let rats = [];
+
+const API_CHAMADOS="https://rat-online-linche.onrender.com/api";
+const chamadoDataInicial=document.getElementById("chamadoDataInicial"),chamadoDataFinal=document.getElementById("chamadoDataFinal"),chamadoFiltroStatus=document.getElementById("chamadoFiltroStatus"),chamadoFiltroPrioridade=document.getElementById("chamadoFiltroPrioridade"),chamadoFiltroCliente=document.getElementById("chamadoFiltroCliente"),chamadoFiltroResponsavel=document.getElementById("chamadoFiltroResponsavel"),chamadosRelatorioTabela=document.getElementById("chamadosRelatorioTabela");
+let chamadosRelatorio=[],chamadosRelatorioFiltrados=[];
+\nlet rats = [];
 let ratsFiltradas = [];
 
 onAuthStateChanged(auth, (user) => {
@@ -47,7 +51,7 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-  carregarRats();
+  carregarRats();\n  carregarChamadosRelatorio();
 });
 
 btnSair?.addEventListener("click", async () => {
@@ -287,3 +291,13 @@ function escapar(texto) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
+[ chamadoDataInicial,chamadoDataFinal,chamadoFiltroStatus,chamadoFiltroPrioridade,chamadoFiltroCliente,chamadoFiltroResponsavel ].forEach(c=>{c.addEventListener("input",aplicarFiltrosChamados);c.addEventListener("change",aplicarFiltrosChamados);});
+document.getElementById("btnLimparFiltrosChamados").addEventListener("click",()=>{[chamadoDataInicial,chamadoDataFinal,chamadoFiltroStatus,chamadoFiltroPrioridade,chamadoFiltroCliente,chamadoFiltroResponsavel].forEach(c=>c.value="");aplicarFiltrosChamados();});
+document.getElementById("btnExportarChamados").addEventListener("click",exportarChamadosCsv);
+async function carregarChamadosRelatorio(){try{const token=await sessao.user.getIdToken();const resp=await fetch(API_CHAMADOS+"/chamados?limite=500",{headers:{Authorization:"Bearer "+token}});const data=await resp.json().catch(()=>({}));if(!resp.ok)throw new Error(data.message||"Falha HTTP "+resp.status);chamadosRelatorio=Array.isArray(data.chamados)?data.chamados:[];aplicarFiltrosChamados();document.getElementById("chamadosRelatorioAtualizado").textContent="Atualizado em "+new Date().toLocaleString("pt-BR");}catch(e){console.error("Erro ao carregar relatório de chamados:",e);chamadosRelatorioTabela.innerHTML='<tr><td colspan="7">Não foi possível carregar os chamados: '+escapar(e.message)+'</td></tr>';}}
+function obterDataChamado(c){const v=c.criadoEm;if(!v)return null;if(typeof v.toDate==="function")return v.toDate();if(typeof v._seconds==="number")return new Date(v._seconds*1000);if(typeof v.seconds==="number")return new Date(v.seconds*1000);const d=new Date(v);return Number.isNaN(d.getTime())?null:d;}
+function aplicarFiltrosChamados(){const ini=chamadoDataInicial.value?new Date(chamadoDataInicial.value+"T00:00:00"):null,fim=chamadoDataFinal.value?new Date(chamadoDataFinal.value+"T23:59:59"):null,st=chamadoFiltroStatus.value,pr=chamadoFiltroPrioridade.value,cl=chamadoFiltroCliente.value.toLocaleLowerCase("pt-BR").trim(),re=chamadoFiltroResponsavel.value.toLocaleLowerCase("pt-BR").trim();chamadosRelatorioFiltrados=chamadosRelatorio.filter(c=>{const d=obterDataChamado(c);return(!ini||(d&&d>=ini))&&(!fim||(d&&d<=fim))&&(!st||c.status===st)&&(!pr||c.prioridade===pr)&&(!cl||String(c.clienteNome||"").toLocaleLowerCase("pt-BR").includes(cl))&&(!re||String(c.responsavelNome||"Não atribuído").toLocaleLowerCase("pt-BR").includes(re));});renderizarResumoChamados();}
+function agruparChamados(campo){const map=new Map();chamadosRelatorioFiltrados.forEach(c=>{const n=String(c[campo]||"Não informado").trim()||"Não informado";map.set(n,(map.get(n)||0)+1);});return[...map.entries()].sort((a,b)=>b[1]-a[1]).slice(0,10);}
+function renderizarResumoChamados(){const l=chamadosRelatorioFiltrados,st={novo:"Novo",em_atendimento:"Em atendimento",aguardando_cliente:"Aguardando cliente",encerrado:"Encerrado"},pr={urgente:"Urgente",alta:"Alta",normal:"Normal",baixa:"Baixa"};document.getElementById("chMetricTotal").textContent=l.length;document.getElementById("chMetricAbertos").textContent=l.filter(c=>c.status!=="encerrado").length;document.getElementById("chMetricAguardando").textContent=l.filter(c=>c.status==="aguardando_cliente").length;document.getElementById("chMetricUrgentes").textContent=l.filter(c=>c.prioridade==="urgente").length;const draw=(id,items,labels={})=>renderizarListaResumo(document.getElementById(id),items.map(([n,v])=>[labels[n]||n,v]),"Nenhum chamado encontrado");draw("chStatusResumo",agruparChamados("status"),st);draw("chPrioridadeResumo",agruparChamados("prioridade"),pr);draw("chClientesResumo",agruparChamados("clienteNome"));draw("chResponsaveisResumo",agruparChamados("responsavelNome"));if(!l.length){chamadosRelatorioTabela.innerHTML='<tr><td colspan="7">Nenhum chamado encontrado para os filtros informados.</td></tr>';return;}chamadosRelatorioTabela.innerHTML=l.map(c=>{const d=obterDataChamado(c);return'<tr><td><strong>'+escapar(c.protocolo||"")+'</strong></td><td>'+escapar(c.clienteNome||"")+'<br><small>'+escapar(c.equipamentoNome||"Sem equipamento")+'</small></td><td>'+escapar(c.assunto||"")+'</td><td>'+escapar(st[c.status]||c.status||"")+'</td><td>'+escapar(pr[c.prioridade]||c.prioridade||"")+'</td><td>'+escapar(c.responsavelNome||"Não atribuído")+'</td><td>'+escapar(d?d.toLocaleString("pt-BR"):"—")+'</td></tr>';}).join("");}
+function exportarChamadosCsv(){if(!chamadosRelatorioFiltrados.length){alert("Não há chamados para exportar.");return;}const rows=[["Protocolo","Cliente","Equipamento","Assunto","Status","Prioridade","Responsável","Abertura"]];chamadosRelatorioFiltrados.forEach(c=>{const d=obterDataChamado(c);rows.push([c.protocolo||"",c.clienteNome||"",c.equipamentoNome||"",c.assunto||"",c.status||"",c.prioridade||"",c.responsavelNome||"",d?d.toLocaleString("pt-BR"):""]);});const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(";")).join("\n");const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="relatorio-chamados-"+new Date().toISOString().slice(0,10)+".csv";a.click();URL.revokeObjectURL(url);}
