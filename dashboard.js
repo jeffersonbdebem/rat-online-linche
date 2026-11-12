@@ -49,6 +49,8 @@ const ehGestao =
     perfil
   );
 
+const API_CHAMADOS = "https://rat-online-linche.onrender.com/api";
+
 let visitas =
   [];
 
@@ -66,6 +68,8 @@ function inicializar() {
   observarVisitas();
 
   observarRats();
+
+  carregarChamadosDashboard();
 
   if (ehGestao) {
     carregarGestao();
@@ -616,6 +620,63 @@ function renderizarRats() {
       )
       .join("");
 
+}
+
+
+async function carregarChamadosDashboard() {
+  const painel = document.getElementById("painelChamadosDashboard");
+  if (!painel) return;
+  const perfilAtual = String(sessao.perfil.perfil || "").toLowerCase();
+  if (!["admin", "gestor", "analista"].includes(perfilAtual)) {
+    painel.classList.add("hidden");
+    return;
+  }
+
+  const lista = document.getElementById("ultimosChamadosDashboard");
+  try {
+    const token = await sessao.user.getIdToken();
+    const resposta = await fetch(`${API_CHAMADOS}/chamados?limite=500`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const dados = await resposta.json().catch(() => ({}));
+    if (!resposta.ok) throw new Error(dados.message || `Falha HTTP ${resposta.status}`);
+
+    const chamados = Array.isArray(dados.chamados) ? dados.chamados : [];
+    const abertos = chamados.filter(c => c.status !== "encerrado");
+    definirTexto("dashChamadosAbertos", abertos.length);
+    definirTexto("dashChamadosNovos", chamados.filter(c => c.status === "novo").length);
+    definirTexto("dashChamadosAtendimento", chamados.filter(c => c.status === "em_atendimento").length);
+    definirTexto("dashChamadosAguardando", chamados.filter(c => c.status === "aguardando_cliente").length);
+    definirTexto("dashChamadosUrgentes", abertos.filter(c => c.prioridade === "urgente").length);
+
+    const recentes = chamados.slice(0, 5);
+    if (!recentes.length) {
+      lista.innerHTML = '<div class="dashboard-empty">Nenhum chamado cadastrado.</div>';
+      return;
+    }
+    const statusLabel = {
+      novo: "Novo",
+      em_atendimento: "Em atendimento",
+      aguardando_cliente: "Aguardando cliente",
+      encerrado: "Encerrado"
+    };
+    lista.innerHTML = recentes.map(chamado => `
+      <a class="rat-row" href="chamados.html">
+        <div class="rat-row-main">
+          <strong>${esc(chamado.protocolo || "Chamado")}</strong>
+          <small>${esc(chamado.clienteNome || "Cliente não informado")} · ${esc(chamado.assunto || "")}</small>
+        </div>
+        <div class="rat-row-meta">
+          <span>${esc(statusLabel[chamado.status] || chamado.status || "—")}</span>
+          <small>${esc(chamado.prioridade || "normal").toUpperCase()} · ${esc(formatarTimestamp(chamado.atualizadoEm || chamado.criadoEm))}</small>
+        </div>
+      </a>
+    `).join("");
+  } catch (erro) {
+    console.error("[Dashboard] Erro ao carregar chamados independentes:", erro);
+    lista.innerHTML = '<div class="dashboard-empty error">Não foi possível carregar os chamados. Verifique sua permissão ou tente novamente.</div>';
+    ["dashChamadosAbertos", "dashChamadosNovos", "dashChamadosAtendimento", "dashChamadosAguardando", "dashChamadosUrgentes"].forEach(id => definirTexto(id, "—"));
+  }
 }
 
 async function carregarGestao() {
