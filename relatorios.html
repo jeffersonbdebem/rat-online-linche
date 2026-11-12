@@ -27,7 +27,25 @@
     </header>
 
     <section class="card">
-      <h2>Filtros</h2>
+
+<section class="card" id="relatorioChamados">
+<h2>Chamados independentes</h2><p>Indicadores exclusivos da fila de chamados, sem misturar com visitas técnicas e RATs.</p>
+<div class="grid three">
+<label>Data inicial<input type="date" id="chamadoDataInicial"></label><label>Data final<input type="date" id="chamadoDataFinal"></label>
+<label>Status<select id="chamadoFiltroStatus"><option value="">Todos</option><option value="novo">Novo</option><option value="em_atendimento">Em atendimento</option><option value="aguardando_cliente">Aguardando cliente</option><option value="encerrado">Encerrado</option></select></label>
+</div><div class="grid three">
+<label>Prioridade<select id="chamadoFiltroPrioridade"><option value="">Todas</option><option value="urgente">Urgente</option><option value="alta">Alta</option><option value="normal">Normal</option><option value="baixa">Baixa</option></select></label>
+<label>Cliente<input id="chamadoFiltroCliente" placeholder="Nome do cliente"></label><label>Responsável<input id="chamadoFiltroResponsavel" placeholder="Nome do responsável"></label>
+</div><div class="actions"><button class="secondary" type="button" id="btnLimparFiltrosChamados">Limpar filtros</button><button class="primary" type="button" id="btnExportarChamados">Exportar chamados CSV</button></div>
+<div class="grid four">
+<div class="mini-card"><h3>Total filtrado</h3><strong class="metric" id="chMetricTotal">0</strong></div><div class="mini-card"><h3>Em aberto</h3><strong class="metric" id="chMetricAbertos">0</strong></div><div class="mini-card"><h3>Aguardando cliente</h3><strong class="metric" id="chMetricAguardando">0</strong></div><div class="mini-card"><h3>Prioridade urgente</h3><strong class="metric" id="chMetricUrgentes">0</strong></div>
+</div><div class="grid two">
+<div class="card"><h2>Chamados por status</h2><div id="chStatusResumo" class="report-list"></div></div><div class="card"><h2>Chamados por prioridade</h2><div id="chPrioridadeResumo" class="report-list"></div></div>
+</div><div class="grid two">
+<div class="card"><h2>Top clientes</h2><div id="chClientesResumo" class="report-list"></div></div><div class="card"><h2>Por responsável</h2><div id="chResponsaveisResumo" class="report-list"></div></div>
+</div><div class="table-wrapper"><table class="tabela"><thead><tr><th>Protocolo</th><th>Cliente / Equipamento</th><th>Assunto</th><th>Status</th><th>Prioridade</th><th>Responsável</th><th>Abertura</th></tr></thead><tbody id="chamadosRelatorioTabela"><tr><td colspan="7">Carregando chamados...</td></tr></tbody></table></div><p id="chamadosRelatorioAtualizado" aria-live="polite"></p>
+</section>
+\n      <h2>Filtros de RATs</h2>
 
       <div class="grid three">
         <label>Data inicial
