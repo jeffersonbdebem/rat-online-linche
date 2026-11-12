@@ -49,6 +49,8 @@ const ehGestao =
     perfil
   );
 
+const API_CHAMADOS = "https://rat-online-linche.onrender.com/api";
+
 let visitas =
   [];
 
@@ -66,6 +68,8 @@ function inicializar() {
   observarVisitas();
 
   observarRats();
+
+  carregarChamadosDashboard();
 
   if (ehGestao) {
     carregarGestao();
