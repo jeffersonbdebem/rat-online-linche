@@ -726,3 +726,28 @@ textarea {
 .status-quick-option:hover{background:#eef7f2}
 .status-quick-option.active{background:#e5f7ed;color:#0a7544}
 @media(max-width:700px){.status-quick-button{font-size:11px;padding:7px 9px}.status-quick-menu{min-width:170px}}
+
+
+/* V2.8.1 - QUADRO DE VISITAS RESPONSIVO */
+.app-shell{grid-template-columns:clamp(76px,17vw,230px) minmax(0,1fr);min-height:100dvh}
+.sidebar{height:100dvh;min-height:0;overflow-y:auto;overflow-x:hidden}
+.main-content{min-width:0;padding:clamp(14px,2vw,30px)}
+.kanban{grid-template-columns:repeat(5,minmax(190px,1fr));gap:clamp(8px,1vw,14px);overflow-x:auto}
+.kanban-column{min-width:0;min-height:clamp(320px,calc(100dvh - 330px),520px)}
+.card-list{min-height:0}
+@media(max-height:850px) and (min-width:651px){
+  .sidebar{padding:12px 10px}
+  .sidebar .brand{padding-bottom:12px}
+  .sidebar .nav-menu{gap:3px}
+  .sidebar .nav-menu a{min-height:34px;padding:7px 9px}
+  .sidebar-user{margin-top:8px;margin-bottom:7px;padding:8px 5px}
+  .sidebar-footer-logo{margin-top:4px;padding:7px 3px 0}
+  .sidebar-footer-logo img{width:min(100%,112px);max-height:30px}
+  .sidebar-developer-credit{font-size:7px}
+}
+@media(max-width:650px){
+  .app-shell{display:block}
+  .sidebar{overflow:visible}
+  .kanban{grid-template-columns:repeat(5,84vw)}
+  .kanban-column{min-height:360px}
+}
