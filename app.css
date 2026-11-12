@@ -1319,3 +1319,50 @@ body.modal-open{overflow:hidden}
 
 .client-tools{justify-content:flex-start;flex-wrap:wrap;margin:0 0 14px}.client-tools button{font-size:10px}.client-tools button:disabled{opacity:.55;cursor:not-allowed}
 .import-panel{margin:0 0 18px;padding:16px;border:1px solid var(--lf-line);border-radius:13px;background:#fbfdfb}.import-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px}.import-header strong,.import-header small{display:block}.import-header strong{font-size:13px}.import-header small{margin-top:4px;color:var(--lf-muted);font-size:9px}.import-summary{margin:0 0 12px;padding:10px 12px;border:1px solid var(--lf-line);border-radius:9px;background:#fff;color:var(--lf-muted);font-size:9px}.import-panel .actions{margin-top:13px}.import-ok{display:inline-block;padding:4px 7px;border-radius:6px;background:#e8f8ef;color:#087744;font-weight:750}.import-error{display:inline-block;padding:4px 7px;border-radius:6px;background:#ffe8ea;color:#b93640;font-weight:750}
+
+
+/* =========================================================
+   V2.8 - LAYOUT RESPONSIVO GLOBAL
+   Ajusta menu, rodapé e conteúdo à área útil da tela.
+   ========================================================= */
+html,body{min-width:320px}
+.app-shell{min-height:100vh;min-height:100dvh;grid-template-columns:clamp(76px,17vw,230px) minmax(0,1fr)}
+.sidebar{position:sticky;top:0;height:100vh;height:100dvh;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#34443a transparent}
+.sidebar .brand{flex-shrink:0}
+.sidebar .nav-menu{flex:0 0 auto;gap:clamp(3px,.55vh,7px)}
+.sidebar .nav-menu a{min-height:clamp(34px,5.2vh,44px);padding:clamp(7px,1vh,12px) clamp(8px,.9vw,14px);font-size:clamp(10px,.82vw,13px)}
+.sidebar-user{margin-top:auto;flex-shrink:0}
+.sidebar-footer-logo{margin-top:10px;flex-shrink:0;display:flex;flex-direction:column;gap:5px;padding:10px 5px 2px}
+.sidebar-footer-logo img{width:clamp(46px,11vw,150px);max-height:42px;object-fit:contain}
+.sidebar-developer-credit{display:block;color:#809087;text-align:center;font-size:clamp(7px,.62vw,9px);line-height:1.35}
+.sidebar-developer-credit strong{color:#aab8af;font-weight:600}
+.main,.main-content{min-width:0;padding:clamp(14px,2vw,30px)!important}
+.topbar{flex-wrap:wrap}
+@media(max-height:850px) and (min-width:681px){
+  .sidebar{padding:12px 10px}
+  .sidebar .brand{padding:0 6px 12px;gap:8px}
+  .sidebar .brand-logo{width:36px;height:36px;min-width:36px}
+  .sidebar .brand-text strong{font-size:14px}
+  .sidebar .brand-text small{font-size:8px}
+  .sidebar .nav-menu{gap:3px}
+  .sidebar .nav-menu a{min-height:34px;padding:7px 9px;font-size:11px}
+  .sidebar-user{margin-top:8px;margin-bottom:7px;padding:8px 5px;gap:6px}
+  .sidebar-user-avatar{width:29px;height:29px}
+  .sidebar-user-info strong{font-size:9px}
+  .sidebar-user-info small{font-size:8px}
+  .sidebar-footer-logo{margin-top:4px;padding:7px 3px 0;gap:3px}
+  .sidebar-footer-logo img{width:min(100%,112px);max-height:30px}
+  .sidebar-developer-credit{font-size:7px}
+}
+@media(max-height:700px) and (min-width:681px){
+  .sidebar{padding:8px}
+  .sidebar .brand{padding-bottom:8px}
+  .sidebar .nav-menu a{min-height:30px;padding:5px 8px}
+  .sidebar-user{padding:5px;margin-bottom:4px}
+  .sidebar-footer-logo img{max-height:24px}
+}
+@media(max-width:680px){
+  .app-shell{display:block;min-height:100dvh}
+  .sidebar{overflow:visible}
+  .main,.main-content{padding:14px 10px 92px!important}
+}
